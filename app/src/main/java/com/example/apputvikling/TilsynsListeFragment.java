@@ -9,6 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Fragment klasse som holder på recycleview for tilsyns-kort
+ */
+
 public class TilsynsListeFragment extends Fragment {
 
     private View view;
