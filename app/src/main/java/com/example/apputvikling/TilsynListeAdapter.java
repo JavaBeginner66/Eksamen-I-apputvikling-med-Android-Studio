@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedList;
 
+/**
+ * Adapter klasse
+ */
 public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter.TilsynListeHolder>{
 
     private LayoutInflater inflater;
@@ -61,7 +64,8 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
 
         @Override
         public void onClick(View view) {
-
+            Intent intent = new Intent(view.getContext(), TilsynAktivitet.class);
+            view.getContext().startActivity(intent);
         }
     }
 }
