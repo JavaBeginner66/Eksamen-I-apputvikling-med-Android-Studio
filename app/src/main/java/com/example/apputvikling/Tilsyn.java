@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 public class Tilsyn {
 
+    static final String OBJEKT_HEADER        = "entries";
     static final String OBJEKT_NAVN          = "navn";
     static final String OBJEKT_ORGNR         = "orgnummer";
     static final String OBJEKT_ADRESSE       = "adrlinje1";
@@ -43,17 +44,11 @@ public class Tilsyn {
             throws JSONException, NullPointerException {
         LinkedList<Tilsyn> tilsynListe = new LinkedList<>();
         JSONObject jsonData  = new JSONObject(jsonTilsynString);
-        JSONArray jsonTilsynTabell = jsonData.optJSONArray("entries");
+        JSONArray jsonTilsynTabell = jsonData.optJSONArray(OBJEKT_HEADER);
         for(int i = 0; i < jsonTilsynTabell.length(); i++) {
-
             JSONObject jsonTilsyn = (JSONObject) jsonTilsynTabell.get(i);
-
             Tilsyn tilsyn = new Tilsyn(jsonTilsyn);
             tilsynListe.add(tilsyn);
-
-
-           // Log.d("yo", jsonTilsyn.toString());
-
         }
         return tilsynListe;
     }

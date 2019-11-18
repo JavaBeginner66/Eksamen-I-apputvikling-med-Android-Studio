@@ -40,6 +40,10 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
     @Override
     public void onBindViewHolder(@NonNull TilsynListeAdapter.TilsynListeHolder holder, int position) {
         holder.kort_info_navn.setText(tilsynListe.get(position).getNavn());
+        holder.kort_info_orgNr.setText(tilsynListe.get(position).getOrgNr());
+        holder.kort_info_adresse.setText(tilsynListe.get(position).getAdresse());
+        holder.kort_info_postNr.setText(tilsynListe.get(position).getPostNr());
+        holder.kort_info_postSted.setText(tilsynListe.get(position).getPostSted());
     }
 
     @Override
@@ -52,12 +56,18 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
         CardView container;
         public final TextView kort_info_navn;
         public final TextView kort_info_orgNr;
+        public final TextView kort_info_adresse;
+        public final TextView kort_info_postNr;
+        public final TextView kort_info_postSted;
 
         public TilsynListeHolder(@NonNull View itemView, TilsynListeAdapter adapter) {
             super(itemView);
             this.container = itemView.findViewById(R.id.tilsyns_kort);
             this.kort_info_navn = itemView.findViewById(R.id.tilsyn_objekt_navn);
             this.kort_info_orgNr = itemView.findViewById(R.id.tilsyn_objekt_orgnr);
+            this.kort_info_adresse = itemView.findViewById(R.id.tilsyn_objekt_adresse);
+            this.kort_info_postNr = itemView.findViewById(R.id.tilsyn_objekt_postnr);
+            this.kort_info_postSted = itemView.findViewById(R.id.tilsyn_objekt_poststed);
             itemView.setOnClickListener(this);
 
         }

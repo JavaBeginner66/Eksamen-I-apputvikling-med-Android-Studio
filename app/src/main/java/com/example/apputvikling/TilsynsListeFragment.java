@@ -66,9 +66,12 @@ public class TilsynsListeFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, REST_ENDPOINT,
                 response -> {
-                  
+
                     try {
                         tilsynListe = Tilsyn.lagTilsynListe(response);
+                        tilsynAdapter = new TilsynListeAdapter(view.getContext(), tilsynListe);
+                        tilsynRecyclerView.setAdapter(tilsynAdapter);
+                        tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                         tilsynAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
