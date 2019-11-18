@@ -1,0 +1,50 @@
+<androidx.cardview.widget.CardView
+    android:id="@+id/tilsyns_kort"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/tilsyn_kort_hoyde"
+    app:cardBackgroundColor="@color/colorCardBackground"
+    app:cardCornerRadius="@dimen/card_radius"
+    android:layout_marginRight="@dimen/vertical_card_margin_horizontal"
+    android:layout_marginLeft="@dimen/vertical_card_margin_horizontal"
+    android:layout_marginTop="@dimen/vertical_card_margin_vertical"
+    android:layout_marginBottom="@dimen/vertical_card_margin_vertical"
+    android:clickable="true"
+    app:cardPreventCornerOverlap="false"
+    android:foreground="?android:selectableItemBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+
+        >
+
+        <ImageView
+            android:id="@+id/tilsyn_kort_bilde"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/a_plus_grade_written_in_red_pe_450"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+
+            app:layout_constraintRight_toRightOf="@id/tilsyn_kort_bilde"
+            
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="50dp"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,44 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:title="Generelt"
+        >
+        <Preference
+            app:key="tilbakemelding"
+            app:title="Send tilbakemelding"
+            app:summary="Vi ønsker å vite hva du liker og ikke"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Notifikasjoner">
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="Notifikasjoner"/>
+        <SwitchPreferenceCompat
+            app:key="vibrate"
+            app:title="Vibrering"/>
+        <CheckBoxPreference
+            app:key="post_notification"
+            app:title="Kommentarer"
+            android:summary="Få varsling om nye kommentarer på en av postene dine"/>
+        <CheckBoxPreference
+            app:key="like_notification"
+            app:title="Likes"
+            android:summary="Få varsling om nye likes på en av postene eller kommentarene dine"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Info">
+        <Preference
+            app:title="Opphavrettsinformasjon"
+            app:summary="SocialCampus © 2019"/>
+        <Preference
+            app:key="app_version"
+            android:enabled="false"
+            app:title="App versjon"
+
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>

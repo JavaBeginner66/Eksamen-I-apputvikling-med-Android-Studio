@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".InnstillingerAktivitet"
+            android:label="Innstillinger"
+            android:theme="@style/InnstillingerSkjerm"
+            />
     </application>
 
 </manifest>

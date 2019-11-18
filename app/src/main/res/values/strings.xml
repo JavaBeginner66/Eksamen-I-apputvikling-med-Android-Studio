@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Apputvikling</string>
+    <string name="app_name">Mattilsynet</string>
+
+        <string-array name="aarstall_spinner">
+            <item>filtrer</item>
+            <item>ingen</item>
+            <item>alle</item>
+            <item>1994</item>
+            <item>2009</item>
+            <item>1669</item>
+        </string-array>
+
 </resources>

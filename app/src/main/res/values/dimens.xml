@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vertical_card_margin_vertical">6dp</dimen>
+    <dimen name="vertical_card_margin_horizontal">6dp</dimen>
+    <dimen name="horizontal_card_margin_vertical">3dp</dimen>
+    <dimen name="horizontal_card_margin_horizontal">5dp</dimen>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="tilsyn_kort_hoyde">200dp</dimen>
+</resources>

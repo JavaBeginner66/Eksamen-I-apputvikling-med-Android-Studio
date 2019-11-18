@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorPrimaryBackground">#121212</color>
     <color name="colorLightDark">#4b5058</color>
+    <color name="colorAccent">#43A8CE</color>
+    <color name="colorCardBackground">#212121</color>
 
     <color name="textWhitePrimary">#DFFFFFFF</color>
     <color name="textWhiteSecondary">#99FFFFFF</color>
