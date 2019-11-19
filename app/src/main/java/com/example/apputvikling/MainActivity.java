@@ -102,10 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         // Fyller listen med formatert json
                         tilsynListe = Tilsyn.lagTilsynListe(response, filtrer_aarstall.getSelectedItem().toString());
                         // Oppdater recycleview
-                        tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
-                        tilsynRecyclerView.setAdapter(tilsynAdapter);
-                        tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-                        tilsynAdapter.notifyDataSetChanged();
+                        oppdaterRecycleview();
                         if(tilsynListe.isEmpty())
                             Toast.makeText(getApplicationContext(), "Ingen treff", Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
@@ -173,15 +170,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 Tilsyn tilsyn = tilsynListe.get(viewHolder.getAdapterPosition());
+                int posisjon = viewHolder.getAdapterPosition();
 
-                if (direction == ItemTouchHelper.RIGHT) {
+                if (direction == ItemTouchHelper.LEFT) {
                     tilsynListe.remove(tilsyn);
-                    tilsynListe.remove(viewHolder.getAdapterPosition());
                     tilsynAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-
                     final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), "Tilsyn slettet", Snackbar.LENGTH_LONG);
-                    snackBar.setAction("Fjern tilsyn", v -> {
-                        //Her kan man legge inn angrefunksjon på sletting av innlegg
+                    snackBar.setAction("Gjenopprett tilsyn", v -> {
+                        tilsynListe.add(posisjon, tilsyn);
+                        tilsynAdapter.notifyItemInserted(posisjon);
                         snackBar.dismiss();
                     });
                     snackBar.show();
@@ -212,5 +209,11 @@ public class MainActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(tilsynRecyclerView);
     }
 
+    void oppdaterRecycleview(){
+        tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
+        tilsynRecyclerView.setAdapter(tilsynAdapter);
+        tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        tilsynAdapter.notifyDataSetChanged();
+    }
 
 }

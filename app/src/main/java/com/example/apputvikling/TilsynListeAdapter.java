@@ -49,9 +49,9 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
         String karakter = tilsynListe.get(position).getKarakter();
         // Setter bilde basert på hvilken total-karakter kortet i position har
         switch (karakter){
-            case "0": holder.kort_info_karakter.setImageResource(R.drawable.sur); break;
-            case "1": holder.kort_info_karakter.setImageResource(R.drawable.noytral); break;
-            case "2": holder.kort_info_karakter.setImageResource(R.drawable.smil); break;
+            case "0": case "1": holder.kort_info_karakter.setImageResource(R.drawable.smil); break;
+            case "2": holder.kort_info_karakter.setImageResource(R.drawable.noytral); break;
+            case "3": holder.kort_info_karakter.setImageResource(R.drawable.sur); break;
         }
 
     }
