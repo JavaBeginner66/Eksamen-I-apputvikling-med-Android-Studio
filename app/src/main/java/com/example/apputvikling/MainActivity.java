@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 response -> {
                     try {
                         // Fyller listen med formatert json
-                        tilsynListe = Tilsyn.lagTilsynListe(response, søk_navn.getText().toString(), søk_poststed.getText().toString(), filtrer_årstall.getSelectedItem().toString());
+                        tilsynListe = Tilsyn.lagTilsynListe(response, filtrer_årstall.getSelectedItem().toString());
                         // Oppdater recycleview
                         tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
                         tilsynRecyclerView.setAdapter(tilsynAdapter);

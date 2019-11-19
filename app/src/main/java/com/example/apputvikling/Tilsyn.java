@@ -50,8 +50,9 @@ public class Tilsyn {
             // Finner årstall fra dato for å sjekke med årsfilter
             String sub = jsonTilsyn.optString("dato");
             String år = sub.substring(4, 8);
-            // Hvis årtall er det samme som filter ligger på, eller default, gå videre
-            tilsynListe.add(new Tilsyn(jsonTilsyn));
+            // Hvis årtall er det samme som filter ligger på, eller default, lag Tilsyn objekt.
+            if(år.equals(årsFilter) || årsFilter.equals("alle") || årsFilter.equals("filtrer"))
+                tilsynListe.add(new Tilsyn(jsonTilsyn));
         }
         return tilsynListe;
     }
