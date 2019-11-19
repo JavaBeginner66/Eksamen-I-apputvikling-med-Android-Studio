@@ -1,5 +1,7 @@
 package com.example.apputvikling;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +25,8 @@ public class Tilsyn {
     private String postSted;
     private String karakter;
 
+    public static int staticCount;
+
     // Konstruktør for å ta imot JSonObjekt fra metoden lagTilsynListe, og sette felt.
     public Tilsyn(JSONObject jsonObject){
         this.navn = jsonObject.optString(OBJEKT_NAVN);
@@ -31,6 +35,8 @@ public class Tilsyn {
         this.postNr = jsonObject.optString(OBJEKT_POSTNR);
         this.postSted = jsonObject.optString(OBJEKT_POSTSTED);
         this.karakter = jsonObject.optString(OBJEKT_KARAKTER);
+        staticCount++;
+        Log.d("count", "Number of objects: " + staticCount);
     }
 
     public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString, String søkeNavn, String søkePoststed, String årsFilter)
