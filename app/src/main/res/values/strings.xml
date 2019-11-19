@@ -2,8 +2,10 @@
     <string name="app_name">Mattilsynet</string>
 
         <string-array name="aarstall_spinner">
+            <!-- Legger til filtrer her til å vise ''hint'' til bruker, siden
+                ''alle'' som hint ville ikke forklart hva funksjonen er til en ny bruker.
+                (filtrer teller som alle) -->
             <item>filtrer</item>
-            <item>ingen</item>
             <item>alle</item>
             <item>2016</item>
             <item>2017</item>

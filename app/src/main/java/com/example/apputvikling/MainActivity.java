@@ -29,7 +29,7 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String REST_ENDPOINT =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn";
+    public final static String REST_ENDPOINT =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?page=1";
 
     private RecyclerView tilsynRecyclerView;
     private TilsynListeAdapter tilsynAdapter;
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         // Fyller listen med formatert json
                         tilsynListe = Tilsyn.lagTilsynListe(response, søk_navn.getText().toString(), søk_poststed.getText().toString(), filtrer_årstall.getSelectedItem().toString());
+                        // Oppdater recycleview
                         tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
                         tilsynRecyclerView.setAdapter(tilsynAdapter);
                         tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, error -> Log.d("tilsyn" , error.getMessage()));
+                }, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
         Volley.newRequestQueue(this).add(stringRequest);
     }
 

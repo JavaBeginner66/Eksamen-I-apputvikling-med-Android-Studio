@@ -1,8 +1,5 @@
 package com.example.apputvikling;
 
-import android.util.Log;
-import android.widget.ImageView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,15 +23,6 @@ public class Tilsyn {
     private String postSted;
     private String karakter;
 
-    public Tilsyn(String navn, String orgNr, String adresse, String postNr, String postSted, String karakter) {
-        this.navn = navn;
-        this.orgNr = orgNr;
-        this.adresse = adresse;
-        this.postNr = postNr;
-        this.postSted = postSted;
-        this.karakter = karakter;
-    }
-
     // Konstruktør for å ta imot JSonObjekt fra metoden lagTilsynListe, og sette felt.
     public Tilsyn(JSONObject jsonObject){
         this.navn = jsonObject.optString(OBJEKT_NAVN);
@@ -53,26 +41,24 @@ public class Tilsyn {
 
         for(int i = 0; i < jsonTilsynTabell.length(); i++) {
             JSONObject jsonTilsyn = (JSONObject) jsonTilsynTabell.get(i);
-
+            // Finner årstall fra dato for å sjekke med årsfilter
             String sub = jsonTilsyn.optString("dato");
             String år = sub.substring(4, 8);
-
-
-
-            if(!søkeNavn.equals("") && !søkePoststed.equals("")){
-                if(jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn) && jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
+            // Hvis årtall er det samme som filter ligger på, eller default, gå videre
+            if(årsFilter.equals(år) || årsFilter.equals("alle") || årsFilter.equals("filtrer")) {
+                // I disse blokkene sjekker jeg hvilke input felt som er fylt inn, og bruker det til å hente ut riktig Json
+                if (!søkeNavn.equals("") && !søkePoststed.equals("")) {
+                    if (jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn) && jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
+                        tilsynListe.add(new Tilsyn(jsonTilsyn));
+                } else if (!søkeNavn.equals("")) {
+                    if (jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn))
+                        tilsynListe.add(new Tilsyn(jsonTilsyn));
+                } else if (!søkePoststed.equals("")) {
+                    if (jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
+                        tilsynListe.add(new Tilsyn(jsonTilsyn));
+                } else {
                     tilsynListe.add(new Tilsyn(jsonTilsyn));
-            }
-            else if(!søkeNavn.equals("")){
-                if(jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn))
-                    tilsynListe.add(new Tilsyn(jsonTilsyn));
-            }
-            else if(!søkePoststed.equals("")){
-                if(jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
-                    tilsynListe.add(new Tilsyn(jsonTilsyn));
-            }
-            else{
-                tilsynListe.add(new Tilsyn(jsonTilsyn));
+                }
             }
         }
         return tilsynListe;
