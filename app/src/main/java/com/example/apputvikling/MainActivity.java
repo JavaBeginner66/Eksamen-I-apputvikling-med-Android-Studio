@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private TilsynListeAdapter tilsynAdapter;
     private LinkedList<Tilsyn> tilsynListe = new LinkedList<>();
 
-    private EditText søk_navn;
-    private EditText søk_poststed;
-    private  Spinner filtrer_årstall;
+    private EditText sook_navn;
+    private EditText sook_poststed;
+    private  Spinner filtrer_aarstall;
 
-    private Button søk;
-    private Button finn_nærme_tilsyn;
+    private Button sook_knapp;
+    private Button finn_noerme_tilsyn; // Det her skjer med norske variabel navn
 
 
     @Override
@@ -53,17 +52,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Finner og setter alle felt
-        søk_navn = findViewById(R.id.sokefelt_navn);
-        søk_poststed = findViewById(R.id.sokefelt_adresse);
-        filtrer_årstall = findViewById(R.id.spinner_filter);
-        søk = findViewById(R.id.sok_knapp);
-        finn_nærme_tilsyn = findViewById(R.id.finn_tilsyn_på_kart);
+        sook_navn = findViewById(R.id.sokefelt_navn);
+        sook_poststed = findViewById(R.id.sokefelt_adresse);
+        filtrer_aarstall = findViewById(R.id.spinner_filter);
+        sook_knapp = findViewById(R.id.sok_knapp);
+        finn_noerme_tilsyn = findViewById(R.id.finn_tilsyn_på_kart);
 
         // Setter opp spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.aarstall_spinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        filtrer_årstall.setAdapter(adapter);
+        filtrer_aarstall.setAdapter(adapter);
 
         // Setter opp adapter og recycleview
         tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tilsynRecyclerView.setAdapter(tilsynAdapter);
 
-        søk.setOnClickListener((View v) -> {
+        sook_knapp.setOnClickListener((View v) -> {
             hideKeyboard(this);
             lesTilsynObjekt();
         });
@@ -80,16 +79,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void lesTilsynObjekt()
     {
-        String qNavn = søk_navn.getText().toString();
-        String qPostSted = søk_poststed.getText().toString();
-
+        String qNavn = sook_navn.getText().toString();
+        String qPostSted = sook_poststed.getText().toString();
+         /*
+         * Lager url for stringRequest. Om enten navn er poststed er tomme, vil fortsatt
+         * spørringa utføres på de felt som er fylt ut.
+         */
         String query = REST_ENDPOINT + "navn=" + qNavn + "&" + "poststed=" + qPostSted;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 response -> {
                     try {
                         // Fyller listen med formatert json
-                        tilsynListe = Tilsyn.lagTilsynListe(response, filtrer_årstall.getSelectedItem().toString());
+                        tilsynListe = Tilsyn.lagTilsynListe(response, filtrer_aarstall.getSelectedItem().toString());
                         // Oppdater recycleview
                         tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
                         tilsynRecyclerView.setAdapter(tilsynAdapter);
