@@ -1,6 +1,7 @@
 package com.example.apputvikling;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,19 +17,22 @@ public class Tilsyn {
     static final String OBJEKT_ADRESSE       = "adrlinje1";
     static final String OBJEKT_POSTNR        = "postnr";
     static final String OBJEKT_POSTSTED      = "poststed";
+    static final String OBJEKT_KARAKTER      = "total_karakter";
 
     private String navn;
     private String orgNr;
     private String adresse;
     private String postNr;
     private String postSted;
+    private String karakter;
 
-    public Tilsyn(String navn, String orgNr, String adresse, String postNr, String postSted) {
+    public Tilsyn(String navn, String orgNr, String adresse, String postNr, String postSted, String karakter) {
         this.navn = navn;
         this.orgNr = orgNr;
         this.adresse = adresse;
         this.postNr = postNr;
         this.postSted = postSted;
+        this.karakter = karakter;
     }
 
     // Konstruktør for å ta imot JSonObjekt fra metoden lagTilsynListe, og sette felt.
@@ -38,15 +42,19 @@ public class Tilsyn {
         this.adresse = jsonObject.optString(OBJEKT_ADRESSE);
         this.postNr = jsonObject.optString(OBJEKT_POSTNR);
         this.postSted = jsonObject.optString(OBJEKT_POSTSTED);
+        this.karakter = jsonObject.optString(OBJEKT_KARAKTER);
     }
 
-    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString, String søkeNavn, String søkePoststed)
+    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString, String søkeNavn, String søkePoststed, String årsFilter)
             throws JSONException, NullPointerException {
         LinkedList<Tilsyn> tilsynListe = new LinkedList<>();
         JSONObject jsonData  = new JSONObject(jsonTilsynString);
         JSONArray jsonTilsynTabell = jsonData.optJSONArray(OBJEKT_HEADER);
+
         for(int i = 0; i < jsonTilsynTabell.length(); i++) {
             JSONObject jsonTilsyn = (JSONObject) jsonTilsynTabell.get(i);
+            Log.d("yooo", jsonTilsyn.getString("dato"));
+
             if(!søkeNavn.equals("") && !søkePoststed.equals("")){
                 if(jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn) && jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
                     tilsynListe.add(new Tilsyn(jsonTilsyn));
@@ -85,5 +93,9 @@ public class Tilsyn {
 
     public String getPostSted() {
         return postSted;
+    }
+
+    public String getKarakter() {
+        return karakter;
     }
 }

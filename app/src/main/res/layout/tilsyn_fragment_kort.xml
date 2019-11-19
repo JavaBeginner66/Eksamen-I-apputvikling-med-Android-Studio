@@ -25,9 +25,12 @@
             android:layout_height="@dimen/img_dimens"
 
             android:scaleType="centerCrop"
-            android:src="@drawable/a_plus_grade_written_in_red_pe_450"
+            android:src="@drawable/smil"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="10dp"
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
