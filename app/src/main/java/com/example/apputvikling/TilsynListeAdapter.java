@@ -3,6 +3,7 @@ package com.example.apputvikling;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -80,7 +81,6 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
             this.kort_info_postSted = itemView.findViewById(R.id.tilsyn_objekt_poststed);
             this.kort_info_karakter = itemView.findViewById(R.id.tilsyn_kort_bilde);
             itemView.setOnClickListener(this);
-
         }
 
         @Override
@@ -88,5 +88,7 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
             Intent intent = new Intent(view.getContext(), TilsynAktivitet.class);
             view.getContext().startActivity(intent);
         }
+
+
     }
 }

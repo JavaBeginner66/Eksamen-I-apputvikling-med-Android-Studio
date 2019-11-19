@@ -2,12 +2,17 @@ package com.example.apputvikling;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +26,13 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
 import java.util.LinkedList;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             lesTilsynObjekt();
         });
 
+        swipeFunksjon();
     }
 
     public void lesTilsynObjekt()
@@ -145,4 +154,63 @@ public class MainActivity extends AppCompatActivity {
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    /**
+     * KILDE/Inspirasjon
+     * https://codelabs.developers.google.com/codelabs/android-training-cards-and-colors/index.html?index=..%2F..android-training#4
+     */
+    void swipeFunksjon(){
+        //Swipe listener
+        ItemTouchHelper.SimpleCallback helper = new ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.LEFT)
+        {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                Tilsyn tilsyn = tilsynListe.get(viewHolder.getAdapterPosition());
+
+                if (direction == ItemTouchHelper.RIGHT) {
+                    tilsynListe.remove(tilsyn);
+                    tilsynListe.remove(viewHolder.getAdapterPosition());
+                    tilsynAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+                    final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), "Tilsyn slettet", Snackbar.LENGTH_LONG);
+                    snackBar.setAction("Fjern tilsyn", v -> {
+                        //Her kan man legge inn angrefunksjon på sletting av innlegg
+                        snackBar.dismiss();
+                    });
+                    snackBar.show();
+                }
+            }
+
+            /*
+             * Bibliotek fra github for å sette ikoner og tekst bak elementer i recyclerview som vises på swipe
+             * https://github.com/xabaras/RecyclerViewSwipeDecorator
+             */
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftActionIcon(R.drawable.delete_foreground)
+                        .setSwipeLeftActionIconTint(Color.RED)
+                        .addSwipeLeftLabel("Slett Tilsyn")
+                        .setSwipeLeftLabelColor(Color.WHITE)
+                        .addBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryBackground))
+                        .create()
+                        .decorate();
+            }
+
+
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(helper);
+        itemTouchHelper.attachToRecyclerView(tilsynRecyclerView);
+    }
+
+
 }
