@@ -53,7 +53,11 @@ public class Tilsyn {
 
         for(int i = 0; i < jsonTilsynTabell.length(); i++) {
             JSONObject jsonTilsyn = (JSONObject) jsonTilsynTabell.get(i);
-            Log.d("yooo", jsonTilsyn.getString("dato"));
+
+            String sub = jsonTilsyn.optString("dato");
+            String år = sub.substring(4, 8);
+
+
 
             if(!søkeNavn.equals("") && !søkePoststed.equals("")){
                 if(jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn) && jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
