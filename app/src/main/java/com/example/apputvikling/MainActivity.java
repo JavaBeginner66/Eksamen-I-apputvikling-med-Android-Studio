@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
@@ -103,8 +103,12 @@ public class MainActivity extends AppCompatActivity {
                         tilsynListe = Tilsyn.lagTilsynListe(response, filtrer_aarstall.getSelectedItem().toString());
                         // Oppdater recycleview
                         oppdaterRecycleview();
-                        if(tilsynListe.isEmpty())
+                        if(tilsynListe.isEmpty()){
                             Toast.makeText(getApplicationContext(), "Ingen treff", Toast.LENGTH_LONG).show();
+                            if(sook_navn.getText().toString().equals("") && sook_poststed.getText().toString().equals(""))
+                                Toast.makeText(getApplicationContext(), "Fyll inn en eller begge søkefelt for filtrering", Toast.LENGTH_LONG).show();
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -176,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     tilsynListe.remove(tilsyn);
                     tilsynAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), "Tilsyn slettet", Snackbar.LENGTH_LONG);
+                    snackBar.setActionTextColor(getResources().getColor(R.color.snackbarColor));
                     snackBar.setAction("Gjenopprett tilsyn", v -> {
                         tilsynListe.add(posisjon, tilsyn);
                         tilsynAdapter.notifyItemInserted(posisjon);
