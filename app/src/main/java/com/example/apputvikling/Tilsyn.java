@@ -40,15 +40,28 @@ public class Tilsyn {
         this.postSted = jsonObject.optString(OBJEKT_POSTSTED);
     }
 
-    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString)
+    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString, String søkeNavn, String søkePoststed)
             throws JSONException, NullPointerException {
         LinkedList<Tilsyn> tilsynListe = new LinkedList<>();
         JSONObject jsonData  = new JSONObject(jsonTilsynString);
         JSONArray jsonTilsynTabell = jsonData.optJSONArray(OBJEKT_HEADER);
         for(int i = 0; i < jsonTilsynTabell.length(); i++) {
             JSONObject jsonTilsyn = (JSONObject) jsonTilsynTabell.get(i);
-            Tilsyn tilsyn = new Tilsyn(jsonTilsyn);
-            tilsynListe.add(tilsyn);
+            if(!søkeNavn.equals("") && !søkePoststed.equals("")){
+                if(jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn) && jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
+                    tilsynListe.add(new Tilsyn(jsonTilsyn));
+            }
+            else if(!søkeNavn.equals("")){
+                if(jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn))
+                    tilsynListe.add(new Tilsyn(jsonTilsyn));
+            }
+            else if(!søkePoststed.equals("")){
+                if(jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
+                    tilsynListe.add(new Tilsyn(jsonTilsyn));
+            }
+            else{
+                tilsynListe.add(new Tilsyn(jsonTilsyn));
+            }
         }
         return tilsynListe;
     }
