@@ -39,7 +39,7 @@ public class Tilsyn {
         Log.d("count", "Number of objects: " + staticCount);
     }
 
-    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString, String søkeNavn, String søkePoststed, String årsFilter)
+    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString, String årsFilter)
             throws JSONException, NullPointerException {
         LinkedList<Tilsyn> tilsynListe = new LinkedList<>();
         JSONObject jsonData  = new JSONObject(jsonTilsynString);
@@ -51,21 +51,7 @@ public class Tilsyn {
             String sub = jsonTilsyn.optString("dato");
             String år = sub.substring(4, 8);
             // Hvis årtall er det samme som filter ligger på, eller default, gå videre
-            if(årsFilter.equals(år) || årsFilter.equals("alle") || årsFilter.equals("filtrer")) {
-                // I disse blokkene sjekker jeg hvilke input felt som er fylt inn, og bruker det til å hente ut riktig Json
-                if (!søkeNavn.equals("") && !søkePoststed.equals("")) {
-                    if (jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn) && jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
-                        tilsynListe.add(new Tilsyn(jsonTilsyn));
-                } else if (!søkeNavn.equals("")) {
-                    if (jsonTilsyn.getString(OBJEKT_NAVN).equals(søkeNavn))
-                        tilsynListe.add(new Tilsyn(jsonTilsyn));
-                } else if (!søkePoststed.equals("")) {
-                    if (jsonTilsyn.getString(OBJEKT_POSTSTED).equals(søkePoststed))
-                        tilsynListe.add(new Tilsyn(jsonTilsyn));
-                } else {
-                    tilsynListe.add(new Tilsyn(jsonTilsyn));
-                }
-            }
+            tilsynListe.add(new Tilsyn(jsonTilsyn));
         }
         return tilsynListe;
     }

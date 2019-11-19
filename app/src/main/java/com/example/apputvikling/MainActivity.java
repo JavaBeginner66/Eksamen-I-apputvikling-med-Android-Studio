@@ -29,7 +29,7 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String REST_ENDPOINT =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?page=1";
+    public final static String REST_ENDPOINT =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?";
 
     private RecyclerView tilsynRecyclerView;
     private TilsynListeAdapter tilsynAdapter;
@@ -80,8 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void lesTilsynObjekt()
     {
+        String qNavn = søk_navn.getText().toString();
+        String qPostSted = søk_poststed.getText().toString();
+
+        String query = REST_ENDPOINT + "navn=" + qNavn + "&" + "poststed=" + qPostSted;
         StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, REST_ENDPOINT,
+                Request.Method.GET, query,
                 response -> {
                     try {
                         // Fyller listen med formatert json
