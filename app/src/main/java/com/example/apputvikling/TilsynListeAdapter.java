@@ -2,9 +2,7 @@ package com.example.apputvikling;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -35,7 +33,7 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
     @NonNull
     @Override
     public TilsynListeAdapter.TilsynListeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.tilsyn_fragment_kort, parent, false);
+        View itemView = inflater.inflate(R.layout.info_kort, parent, false);
 
         return new TilsynListeHolder(itemView, this);
     }
@@ -76,14 +74,14 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
 
         public TilsynListeHolder(@NonNull View itemView, TilsynListeAdapter adapter) {
             super(itemView);
-            this.container = itemView.findViewById(R.id.tilsyns_kort);
-            this.kort_info_id = itemView.findViewById(R.id.tilsyn_objekt_id);
-            this.kort_info_navn = itemView.findViewById(R.id.tilsyn_objekt_navn);
-            this.kort_info_orgNr = itemView.findViewById(R.id.tilsyn_objekt_orgnr);
-            this.kort_info_adresse = itemView.findViewById(R.id.tilsyn_objekt_adresse);
-            this.kort_info_postNr = itemView.findViewById(R.id.tilsyn_objekt_postnr);
-            this.kort_info_postSted = itemView.findViewById(R.id.tilsyn_objekt_poststed);
-            this.kort_info_karakter = itemView.findViewById(R.id.tilsyn_kort_bilde);
+            this.container = itemView.findViewById(R.id.kort);
+            this.kort_info_id = itemView.findViewById(R.id.kort_id);
+            this.kort_info_navn = itemView.findViewById(R.id.kort_text_1);
+            this.kort_info_orgNr = itemView.findViewById(R.id.kort_text_5);
+            this.kort_info_adresse = itemView.findViewById(R.id.kort_text_2);
+            this.kort_info_postNr = itemView.findViewById(R.id.kort_text_4);
+            this.kort_info_postSted = itemView.findViewById(R.id.kort_text_3);
+            this.kort_info_karakter = itemView.findViewById(R.id.kort_bilde);
             itemView.setOnClickListener(this);
         }
 

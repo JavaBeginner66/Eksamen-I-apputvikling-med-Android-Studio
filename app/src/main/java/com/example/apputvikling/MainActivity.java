@@ -20,7 +20,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +45,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String REST_ENDPOINT =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?";
+    public final static String REST_ENDPOINT_TILSYN =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?";
 
     public final static int MY_REQUEST_LOCATION = 1;
 
@@ -90,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Setter opp adapter og recycleview
         tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
-        tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
-        tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tilsynRecyclerView.setAdapter(tilsynAdapter);
+        oppdaterRecycleview();
 
         sook_knapp.setOnClickListener((View v) -> {
             hideKeyboard(this);
@@ -124,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         if(postNr != null)
             qPostNr = postNr;
 
-        query = REST_ENDPOINT + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" + qFilter + "&postnr=" + qPostNr;
+        query = REST_ENDPOINT_TILSYN + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" + qFilter + "&postnr=" + qPostNr;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 response -> {

@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
@@ -16,10 +18,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.LinkedList;
+
 public class TilsynAktivitet extends AppCompatActivity {
+
+    public final static String REST_ENDPOINT_KRAVPUNKT = "https://hotell.difi.no/api/json/mattilsynet/smilefjes/kravpunkter?";
 
     private TextView tilsynNavn;
     private TextView tilsynInformasjon;
+
+    private RecyclerView kravpunktRecyclerView;
+    private KravpunktListeAdapter kravpunktAdapter;
+    private LinkedList<Kravpunkt> kravpunktListe = new LinkedList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,21 +39,43 @@ public class TilsynAktivitet extends AppCompatActivity {
         tilsynNavn = findViewById(R.id.tilsyn_informasjon_navn);
         tilsynInformasjon = findViewById(R.id.tilsyn_informasjon_alt);
 
+        for (int i = 0; i<10; i++){
+            kravpunktListe.add(new Kravpunkt("7"));
+        }
+        // Setter opp adapter og recycleview
+        kravpunktRecyclerView = findViewById(R.id.kravpunkt_recycleView);
+        oppdaterKravpunktListe();
+
         // Henter inn tilsynid og navn som er sendt fra TilsynListeAdapter i OnClick
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             tilsynNavn.setText(extras.getString("navn"));
             lesTilsynObjekt(extras.getString("id"));
+            lesKravpunktObjekt(extras.getString("id"));
         }
     }
 
     public void lesTilsynObjekt(String tilsynId)
     {
-        String query = MainActivity.REST_ENDPOINT + "tilsynid=" + tilsynId;
+        String query = MainActivity.REST_ENDPOINT_TILSYN + "tilsynid=" + tilsynId;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 this::formaterTilsynObjekt, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
         Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    public void lesKravpunktObjekt(String tilsynId)
+    {
+        String query = REST_ENDPOINT_KRAVPUNKT + "tilsynid=" + tilsynId;
+        Log.d("halla", tilsynId);
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET, query,
+                this::formaterKravpunktObjekt, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    void formaterKravpunktObjekt(String response){
+
     }
 
     void formaterTilsynObjekt(String response){
@@ -75,8 +107,13 @@ public class TilsynAktivitet extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
-
+    private void oppdaterKravpunktListe(){
+        kravpunktAdapter = new KravpunktListeAdapter(this, kravpunktListe);
+        kravpunktRecyclerView.setAdapter(kravpunktAdapter);
+        kravpunktRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        kravpunktAdapter.notifyDataSetChanged();
     }
 
 }

@@ -5,8 +5,8 @@
     <dimen name="horizontal_card_margin_vertical">3dp</dimen>
     <dimen name="horizontal_card_margin_horizontal">5dp</dimen>
     <dimen name="card_radius">8dp</dimen>
-    <dimen name="tilsyn_kort_hoyde">250dp</dimen>
-    <dimen name="tilsyn_kort_info_marginBottom">5dp</dimen>
-    <dimen name="tilsyn_kort_info_marginTop">5dp</dimen>
-    <dimen name="img_dimens">100dp</dimen>
+    <dimen name="kort_hoyde">270dp</dimen>
+    <dimen name="kort_info_marginBottom">5dp</dimen>
+    <dimen name="kort_info_marginTop">5dp</dimen>
+    <dimen name="bilde_dimens">100dp</dimen>
 </resources>
