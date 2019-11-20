@@ -39,9 +39,6 @@ public class TilsynAktivitet extends AppCompatActivity {
         tilsynNavn = findViewById(R.id.tilsyn_informasjon_navn);
         tilsynInformasjon = findViewById(R.id.tilsyn_informasjon_alt);
 
-        for (int i = 0; i<10; i++){
-            kravpunktListe.add(new Kravpunkt("7"));
-        }
         // Setter opp adapter og recycleview
         kravpunktRecyclerView = findViewById(R.id.kravpunkt_recycleView);
         oppdaterKravpunktListe();
@@ -67,7 +64,6 @@ public class TilsynAktivitet extends AppCompatActivity {
     public void lesKravpunktObjekt(String tilsynId)
     {
         String query = REST_ENDPOINT_KRAVPUNKT + "tilsynid=" + tilsynId;
-        Log.d("halla", tilsynId);
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 this::formaterKravpunktObjekt, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
@@ -75,7 +71,12 @@ public class TilsynAktivitet extends AppCompatActivity {
     }
 
     void formaterKravpunktObjekt(String response){
-
+        try {
+            kravpunktListe = Kravpunkt.lagKravpunktListe(response);
+            oppdaterKravpunktListe();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     void formaterTilsynObjekt(String response){
@@ -91,16 +92,16 @@ public class TilsynAktivitet extends AppCompatActivity {
                     "Post nummer: " + jsonTilsyn.getString("postnr") + "\n \n" +
                     "Dato: " + jsonTilsyn.getString("dato") + "\n \n" +
                     "Tema 1: " + jsonTilsyn.getString("tema1_no") + "\n \n" +
-                    "Tema 2: " + jsonTilsyn.getString("tema2_no") + "\n \n" +
-                    "Tema 3: " + jsonTilsyn.getString("tema3_no") + "\n \n" +
-                    "Tema 4: " + jsonTilsyn.getString("tema4_no") + "\n \n" +
-                    "Adresse linje 1: " + jsonTilsyn.getString("adrlinje1") + "\n \n" +
-                    "Status: " + jsonTilsyn.getString("status") + "\n \n" +
                     "Karakter 1: " + jsonTilsyn.getString("karakter1") + "\n \n" +
+                    "Tema 2: " + jsonTilsyn.getString("tema2_no") + "\n \n" +
                     "Karakter 2: " + jsonTilsyn.getString("karakter2") + "\n \n" +
+                    "Tema 3: " + jsonTilsyn.getString("tema3_no") + "\n \n" +
                     "Karakter 3: " + jsonTilsyn.getString("karakter3") + "\n \n" +
+                    "Tema 4: " + jsonTilsyn.getString("tema4_no") + "\n \n" +
                     "Karakter 4: " + jsonTilsyn.getString("karakter4") + "\n \n" +
                     "Total karakter: " + jsonTilsyn.getString("total_karakter") + "\n \n" +
+                    "Adresse linje 1: " + jsonTilsyn.getString("adrlinje1") + "\n \n" +
+                    "Status: " + jsonTilsyn.getString("status") + "\n \n" +
                     "Tilsyns besøks-type: " + jsonTilsyn.getString("tilsynsbesoektype");
 
             tilsynInformasjon.setText(info);
