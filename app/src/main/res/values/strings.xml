@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Mattilsynet</string>
-    <string name="kravpunkt_navn">Navn: </string>
+    <string name="kravpunkt_navn">Navn: &#160;</string>
+    <string name="kravpunkt_dato">Dato: &#160;</string>
+    <string name="kravpunkt_ordningsverdi">Ordningsverdi: &#160;</string>
+    <string name="kravpunkt_tekst">Tekst: &#160;</string>
 
     <string-array name="aarstall_spinner">
             <!-- Legger til filtrer her til å vise ''hint'' til bruker, siden

@@ -86,11 +86,13 @@ public class TilsynAktivitet extends AppCompatActivity {
             JSONObject  jsonTilsyn = (JSONObject) new JSONArray(new JSONObject(response).getString("entries")).get(0);
 
             // Legger opp all relevant informasjon fra tilsyn objektet inn i et textview i et scrollview
+            String dato = jsonTilsyn.getString("dato");
+            String datoFormatert = dato.substring(0,2) + "/" + dato.substring(2,4) + "/" + dato.substring(4,8);
             String info =
                     "Poststed: " + jsonTilsyn.getString("poststed") + "\n \n" +
                     "Org nummer: " + jsonTilsyn.getString("orgnummer") + "\n \n" +
                     "Post nummer: " + jsonTilsyn.getString("postnr") + "\n \n" +
-                    "Dato: " + jsonTilsyn.getString("dato") + "\n \n" +
+                    "Dato: " + datoFormatert + "\n \n" +
                     "Tema 1: " + jsonTilsyn.getString("tema1_no") + "\n \n" +
                     "Karakter 1: " + jsonTilsyn.getString("karakter1") + "\n \n" +
                     "Tema 2: " + jsonTilsyn.getString("tema2_no") + "\n \n" +

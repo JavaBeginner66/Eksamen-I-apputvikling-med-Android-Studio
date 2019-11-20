@@ -35,11 +35,16 @@ public class KravpunktListeAdapter extends RecyclerView.Adapter<KravpunktListeAd
 
     @Override
     public void onBindViewHolder(@NonNull KravpunktListeAdapter.KravpunktListeHolder holder, int position) {
+        String datoFersk = kravpunktListe.get(position).getDato();
+        String datoFormatert = datoFersk.substring(0,2) + "/" + datoFersk.substring(2,4) + "/" + datoFersk.substring(4,8);
         String kravpunktNavn = context.getString(R.string.kravpunkt_navn) + kravpunktListe.get(position).getNavn();
+        String dato = context.getString(R.string.kravpunkt_dato) + datoFormatert;
+        String ordningsverdi = context.getString(R.string.kravpunkt_ordningsverdi) + kravpunktListe.get(position).getOrdningsverdi();
+        String tekst = context.getString(R.string.kravpunkt_tekst) + kravpunktListe.get(position).getTekst();
         holder.kravpunktnavn.setText(kravpunktNavn);
-        holder.dato.setText(kravpunktListe.get(position).getDato());
-        holder.ordningsverdi.setText(kravpunktListe.get(position).getOrdningsverdi());
-        holder.tekst.setText(kravpunktListe.get(position).getTekst());
+        holder.dato.setText(dato);
+        holder.ordningsverdi.setText(ordningsverdi);
+        holder.tekst.setText(tekst);
         switch (kravpunktListe.get(position).getKarakter()){
             case "0": case "1": holder.kort_info_karakter.setImageResource(R.drawable.smil); break;
             case "2": holder.kort_info_karakter.setImageResource(R.drawable.noytral); break;
