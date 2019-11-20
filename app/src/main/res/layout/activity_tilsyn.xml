@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    >
+
+    <TextView
+        android:id="@+id/tilsyn_informasjon_navn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tilsyn_informasjon_navn"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textColor="@color/textWhitePrimary"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        >
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:background="@color/colorCardBackground"
+            >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp" >
+
+                <TextView
+                    android:id="@+id/tilsyn_informasjon_alt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="tilsyn_informasjon_alt"
+                    android:textSize="25dp"
+                    android:textColor="@color/textWhitePrimary"
+                    />
+
+            </RelativeLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+
 
 </LinearLayout>

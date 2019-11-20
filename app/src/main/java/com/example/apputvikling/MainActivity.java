@@ -112,20 +112,19 @@ public class MainActivity extends AppCompatActivity {
         String qNavn = sook_navn.getText().toString();
         String qPostSted = sook_poststed.getText().toString();
         String qFilter = filtrer_aarstall.getSelectedItem().toString();
+        String qPostNr = "";
         String query;
         // Om filteret ikke ligger på et årstall, default søket til alle årstall med en tom string
         if(qFilter.equals("alle") || qFilter.equals("filtrer"))
             qFilter = "";
 
-         /* Om postNr er initialisert, betyr det at kallet kommer fra finnadresse metoden,
-         /* og da finner vi tilsyn med post nummer som treffer vårt eget. Om ikke, gjør en vanlig
-         /* spørring som inkluderer søke-felta våre
+        /* Om postNr er initialisert, betyr det at kallet kommer fra finnadresse metoden,
+         /* og da finner vi tilsyn med post nummer som treffer postnr fra posisjonen vi søker fra.
           */
-         if(postNr == null)
-             query = REST_ENDPOINT + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" + qFilter;
-         else
-             query = REST_ENDPOINT + "postnr=" + postNr;
+        if(postNr != null)
+            qPostNr = postNr;
 
+        query = REST_ENDPOINT + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" + qFilter + "&postnr=" + qPostNr;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 response -> {

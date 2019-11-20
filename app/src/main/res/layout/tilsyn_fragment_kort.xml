@@ -94,6 +94,13 @@
                     android:text="Navn: "
                     android:textColor="@color/textWhitePrimary"
                     android:textSize="20dp" />
+                <TextView
+                    android:id="@+id/tilsyn_objekt_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:text="id"
+                    />
 
 
             </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.apputvikling;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,6 +42,7 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
 
     @Override
     public void onBindViewHolder(@NonNull TilsynListeAdapter.TilsynListeHolder holder, int position) {
+        holder.kort_info_id.setText(tilsynListe.get(position).getTilsynId());
         holder.kort_info_navn.setText(tilsynListe.get(position).getNavn());
         holder.kort_info_orgNr.setText(tilsynListe.get(position).getOrgNr());
         holder.kort_info_adresse.setText(tilsynListe.get(position).getAdresse());
@@ -64,6 +66,7 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
     class TilsynListeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView container;
+        public final TextView kort_info_id;
         public final TextView kort_info_navn;
         public final TextView kort_info_orgNr;
         public final TextView kort_info_adresse;
@@ -74,6 +77,7 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
         public TilsynListeHolder(@NonNull View itemView, TilsynListeAdapter adapter) {
             super(itemView);
             this.container = itemView.findViewById(R.id.tilsyns_kort);
+            this.kort_info_id = itemView.findViewById(R.id.tilsyn_objekt_id);
             this.kort_info_navn = itemView.findViewById(R.id.tilsyn_objekt_navn);
             this.kort_info_orgNr = itemView.findViewById(R.id.tilsyn_objekt_orgnr);
             this.kort_info_adresse = itemView.findViewById(R.id.tilsyn_objekt_adresse);
@@ -86,6 +90,9 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), TilsynAktivitet.class);
+            // Sender tilsynid til neste aktivitet så jeg kan finne igjen objektet og vise informasjon
+            intent.putExtra("id", kort_info_id.getText().toString());
+            intent.putExtra("navn", kort_info_navn.getText().toString());
             view.getContext().startActivity(intent);
         }
 
