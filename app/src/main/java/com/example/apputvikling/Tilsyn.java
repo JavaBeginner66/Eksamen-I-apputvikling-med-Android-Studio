@@ -35,7 +35,7 @@ public class Tilsyn {
         this.karakter = jsonObject.optString(OBJEKT_KARAKTER);
     }
 
-    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString, String årsFilter)
+    public static LinkedList<Tilsyn> lagTilsynListe(String jsonTilsynString)
             throws JSONException, NullPointerException {
         LinkedList<Tilsyn> tilsynListe = new LinkedList<>();
         JSONObject jsonData  = new JSONObject(jsonTilsynString);
@@ -43,12 +43,7 @@ public class Tilsyn {
 
         for(int i = 0; i < jsonTilsynTabell.length(); i++) {
             JSONObject jsonTilsyn = (JSONObject) jsonTilsynTabell.get(i);
-            // Finner årstall fra dato for å sjekke med årsfilter
-            String sub = jsonTilsyn.optString("dato");
-            String aar = sub.substring(4, 8);
-            // Hvis aartall er det samme som filter ligger på, eller default, lag Tilsyn objekt.
-            if(aar.equals(årsFilter) || årsFilter.equals("alle") || årsFilter.equals("filtrer"))
-                tilsynListe.add(new Tilsyn(jsonTilsyn));
+            tilsynListe.add(new Tilsyn(jsonTilsyn));
         }
         return tilsynListe;
     }

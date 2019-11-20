@@ -90,23 +90,25 @@ public class MainActivity extends AppCompatActivity {
     {
         String qNavn = sook_navn.getText().toString();
         String qPostSted = sook_poststed.getText().toString();
+        String qFilter = filtrer_aarstall.getSelectedItem().toString();
+        // Om filteret ikke ligger på et årstall, default søket til alle årstall med en tom string
+        if(qFilter.equals("alle") || qFilter.equals("filtrer"))
+            qFilter = "";
          /*
          * Lager url for stringRequest. Om enten navn er poststed er tomme, vil fortsatt
          * spørringa utføres på de felt som er fylt ut.
          */
-        String query = REST_ENDPOINT + "navn=" + qNavn + "&" + "poststed=" + qPostSted;
+        String query = REST_ENDPOINT + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" + qFilter;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 response -> {
                     try {
                         // Fyller listen med formatert json
-                        tilsynListe = Tilsyn.lagTilsynListe(response, filtrer_aarstall.getSelectedItem().toString());
+                        tilsynListe = Tilsyn.lagTilsynListe(response);
                         // Oppdater recycleview
                         oppdaterRecycleview();
                         if(tilsynListe.isEmpty()){
                             Toast.makeText(getApplicationContext(), "Ingen treff", Toast.LENGTH_LONG).show();
-                            if(sook_navn.getText().toString().equals("") && sook_poststed.getText().toString().equals(""))
-                                Toast.makeText(getApplicationContext(), "Fyll inn en eller begge søkefelt for filtrering", Toast.LENGTH_LONG).show();
                         }
 
                     } catch (JSONException e) {
