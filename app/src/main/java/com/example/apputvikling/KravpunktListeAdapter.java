@@ -35,8 +35,8 @@ public class KravpunktListeAdapter extends RecyclerView.Adapter<KravpunktListeAd
 
     @Override
     public void onBindViewHolder(@NonNull KravpunktListeAdapter.KravpunktListeHolder holder, int position) {
-        String kravpunktNavn = "Kravpunkt navn: ";
-        holder.kravpunktnavn.setText(kravpunktNavn + kravpunktListe.get(position).getNavn());
+        String kravpunktNavn = context.getString(R.string.kravpunkt_navn) + kravpunktListe.get(position).getNavn();
+        holder.kravpunktnavn.setText(kravpunktNavn);
         holder.dato.setText(kravpunktListe.get(position).getDato());
         holder.ordningsverdi.setText(kravpunktListe.get(position).getOrdningsverdi());
         holder.tekst.setText(kravpunktListe.get(position).getTekst());

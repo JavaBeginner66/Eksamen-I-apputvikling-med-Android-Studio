@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Mattilsynet</string>
+    <string name="kravpunkt_navn">Navn: </string>
 
-        <string-array name="aarstall_spinner">
+    <string-array name="aarstall_spinner">
             <!-- Legger til filtrer her til å vise ''hint'' til bruker, siden
                 ''alle'' som hint ville ikke forklart hva funksjonen er til en ny bruker.
                 (filtrer teller som alle) -->

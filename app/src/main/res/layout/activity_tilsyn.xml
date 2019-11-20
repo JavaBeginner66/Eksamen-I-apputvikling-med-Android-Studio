@@ -51,7 +51,7 @@
         android:id="@+id/tilsyn_kravpunkt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="◄ Kravpunkt ►"
+        android:text="← Kravpunkt →"
         android:textSize="30dp"
         android:gravity="center"
         android:textColor="@color/textWhitePrimary"
