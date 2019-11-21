@@ -48,7 +48,6 @@ public class InnstillingerAktivitet extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.innstillinger, rootKey);
-
             /**
              *  ** KILDE **
              *  https://stackoverflow.com/questions/6669482/value-of-a-listpreference-never-updates
@@ -59,8 +58,8 @@ public class InnstillingerAktivitet extends AppCompatActivity {
                 ListPreference listPref = (ListPreference) preference;
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = prefs.edit();
-                int index = listPref.findIndexOfValue((String) newValue);
-                editor.putInt("aarstall_liste_verdi", index);
+                int verdi = listPref.findIndexOfValue((String) newValue);
+                editor.putInt("aarstall_liste_verdi", verdi);
                 editor.apply();
                 listPref.getValue();
                 return true;
