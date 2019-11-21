@@ -1,5 +1,6 @@
 package com.example.apputvikling;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -12,17 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Canvas;
-import android.graphics.Color;
+
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +44,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
-
 public class MainActivity extends AppCompatActivity {
 
     public final static String REST_ENDPOINT_TILSYN =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?";
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private  Spinner filtrer_aarstall;
 
     private Button sook_knapp;
-    private Button finn_tilsyn_i_nearheten; // Det her skjer med norske variabel navn
+    private Button finn_tilsyn_i_nearheten;
 
 
     @Override
@@ -201,46 +199,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Tilsyn tilsyn = tilsynListe.get(viewHolder.getAdapterPosition());
-                int posisjon = viewHolder.getAdapterPosition();
-
                 if (direction == ItemTouchHelper.LEFT) {
-                    tilsynListe.remove(tilsyn);
-                    tilsynAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                    /* Kunne brukt koden under i stedet til å legge inn bekrefte eller angre funksjon
-                    (som er beskrevet i oppgava), men syns måten med sletting, også et angre alternativ var bedre */
-                    //tilsynAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
-                    final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), "Tilsyn slettet", Snackbar.LENGTH_LONG);
-                    snackBar.setActionTextColor(getResources().getColor(R.color.snackbarColor));
-                    snackBar.setAction("Gjenopprett tilsyn", v -> {
-                        tilsynListe.add(posisjon, tilsyn);
-                        tilsynAdapter.notifyItemInserted(posisjon);
-                        snackBar.dismiss();
-                    });
-                    snackBar.show();
+                    Tilsyn tilsyn = tilsynListe.get(viewHolder.getAdapterPosition());
+                    int posisjon = viewHolder.getAdapterPosition();
+                    /* ** KILDE **
+                    * https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android */
+                    DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                        tilsynAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            tilsynListe.remove(tilsyn);
+                            tilsynAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                            final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), "Tilsyn slettet", Snackbar.LENGTH_LONG);
+                            snackBar.setActionTextColor(getResources().getColor(R.color.snackbarColor));
+                            snackBar.setAction("Gjenopprett tilsyn", v -> {
+                                tilsynListe.add(posisjon, tilsyn);
+                                tilsynAdapter.notifyItemInserted(posisjon);
+                                snackBar.dismiss();
+                            });
+                            snackBar.show();
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Vil du slette tilsyn fra listen?").setPositiveButton("Bekreft", dialogClickListener)
+                            .setNegativeButton("Nei", dialogClickListener).show();
                 }
             }
-
-            /*
-             * Bibliotek fra github for å sette ikoner og tekst bak elementer i recyclerview som vises på swipe
-             * https://github.com/xabaras/RecyclerViewSwipeDecorator
-             * (Ble også tatt i bruk for obligatorisk oppgave 2 for en viss gruppe)
-             */
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                        .addSwipeLeftActionIcon(R.drawable.delete_foreground)
-                        .setSwipeLeftActionIconTint(Color.RED)
-                        .addSwipeLeftLabel("Slett Tilsyn")
-                        .setSwipeLeftLabelColor(Color.WHITE)
-                        .addBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryBackground))
-                        .create()
-                        .decorate();
-            }
-
-
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(helper);
         itemTouchHelper.attachToRecyclerView(tilsynRecyclerView);
@@ -326,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         /* Henter verdier fra instillinger via nøkler
             Gjør det i onResume siden når man går tilbake fra
-            instillinger vinduet, vil ikke onCreate kjøres. */
+            instillinger vinduet, vil ikke onCreate kjøres.*/
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int verdi = myPreferences.getInt("aarstall_liste_verdi", 0);
         filtrer_aarstall.setSelection(verdi);
