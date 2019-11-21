@@ -6,7 +6,7 @@
     <dimen name="horizontal_card_margin_horizontal">5dp</dimen>
     <dimen name="card_radius">8dp</dimen>
     <dimen name="kort_hoyde">250dp</dimen>
-    <dimen name="kort_info_marginBottom">4dp</dimen>
-    <dimen name="kort_info_marginTop">4dp</dimen>
+    <dimen name="kort_info_marginBottom">3dp</dimen>
+    <dimen name="kort_info_marginTop">3dp</dimen>
     <dimen name="bilde_dimens">100dp</dimen>
 </resources>

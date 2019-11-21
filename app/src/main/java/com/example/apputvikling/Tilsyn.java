@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public class Tilsyn {
@@ -78,5 +79,17 @@ public class Tilsyn {
 
     public String getTilsynId() {
         return tilsynId;
+    }
+
+/*
+    ** KILDE / inspirasjon **
+    * https://stackoverflow.com/questions/4432774/how-do-i-make-2-comparable-methods-in-only-one-class
+ */
+    static Comparator<Tilsyn> getNameComparator() {
+        return (tilsyn, t1) -> tilsyn.navn.compareTo(t1.navn);
+    }
+
+    static Comparator<Tilsyn> getPoststedComparator() {
+        return (tilsyn, t1) -> tilsyn.postSted.compareTo(t1.postSted);
     }
 }

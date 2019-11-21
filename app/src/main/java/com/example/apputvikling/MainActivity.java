@@ -41,6 +41,8 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText sook_navn;
     private EditText sook_poststed;
+
     private  Spinner filtrer_aarstall;
+    private  Spinner filtrer_smilefjes;
+    private  Spinner sortering;
 
     private Button sook_knapp;
     private Button finn_tilsyn_i_nearheten;
@@ -78,15 +83,27 @@ public class MainActivity extends AppCompatActivity {
         // Finner og setter alle felt
         sook_navn = findViewById(R.id.sokefelt_navn);
         sook_poststed = findViewById(R.id.sokefelt_adresse);
-        filtrer_aarstall = findViewById(R.id.spinner_filter);
         sook_knapp = findViewById(R.id.sok_knapp);
         finn_tilsyn_i_nearheten = findViewById(R.id.finn_tilsyn_i_nearheten);
+        filtrer_aarstall = findViewById(R.id.spinner_filter_aarstall);
+        filtrer_smilefjes = findViewById(R.id.spinner_filter_smilefjes);
+        sortering = findViewById(R.id.spinner_sortering);
 
-        // Setter opp spinner
+        // Setter opp alle spinners
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.aarstall_spinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filtrer_aarstall.setAdapter(adapter);
+
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.smilefjes_spinner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filtrer_smilefjes.setAdapter(adapter2);
+
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this,
+                R.array.sortering_spinner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortering.setAdapter(adapter3);
 
         // Setter opp adapter og recycleview
         tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
@@ -109,12 +126,22 @@ public class MainActivity extends AppCompatActivity {
     {
         String qNavn = sook_navn.getText().toString();
         String qPostSted = sook_poststed.getText().toString();
-        String qFilter = filtrer_aarstall.getSelectedItem().toString();
+        String qFilter_aarstall = filtrer_aarstall.getSelectedItem().toString();
+        String qFilter_smilefjes = filtrer_smilefjes.getSelectedItem().toString();
         String qPostNr = "";
         String query;
-        // Om filteret ikke ligger på et årstall, default søket til alle årstall med en tom string
-        if(qFilter.equals("alle") || qFilter.equals("filtrer"))
-            qFilter = "";
+
+        // Om filteret ikke ligger på et bestemt element, default søket til ingen filter med en tom string
+        if(qFilter_aarstall.equals("Filtrer:"))
+            qFilter_aarstall = "";
+
+
+        if(qFilter_smilefjes.equals("Filtrer:"))
+            qFilter_smilefjes = "";
+
+        if(qFilter_smilefjes.equals(getResources().getStringArray(R.array.smilefjes_spinner)[1]))
+            qFilter_smilefjes = "0";
+
 
         /* Om postNr er initialisert, betyr det at kallet kommer fra finnadresse metoden,
          /* og da finner vi tilsyn med post nummer som treffer postnr fra posisjonen vi søker fra.
@@ -122,13 +149,19 @@ public class MainActivity extends AppCompatActivity {
         if(postNr != null)
             qPostNr = postNr;
 
-        query = REST_ENDPOINT_TILSYN + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" + qFilter + "&postnr=" + qPostNr;
+        query = REST_ENDPOINT_TILSYN + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" +
+                qFilter_aarstall + "&postnr=" + qPostNr + "&total_karakter=" + qF;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 response -> {
                     try {
                         // Fyller listen med formatert json
                         tilsynListe = Tilsyn.lagTilsynListe(response);
+                        // Sorterer lista basert på bruker input fra sortering spinner
+                        switch ((String)sortering.getSelectedItem()){
+                            case "Navn": Collections.sort(tilsynListe, Tilsyn.getNameComparator()); break;
+                            case "Poststed": Collections.sort(tilsynListe, Tilsyn.getPoststedComparator()); break;
+                        }
                         // Oppdater recycleview
                         oppdaterRecycleview();
                         if(tilsynListe.isEmpty()){

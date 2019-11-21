@@ -6,15 +6,22 @@
     <string name="kravpunkt_tekst">Tekst: &#160;</string>
 
     <string-array name="aarstall_spinner">
-            <!-- Legger til filtrer her til å vise ''hint'' til bruker, siden
-                ''alle'' som hint ville ikke forklart hva funksjonen er til en ny bruker.
-                (filtrer teller som alle) -->
-            <item>filtrer</item>
-            <item>alle</item>
+            <item>Filtrer:</item>
             <item>2016</item>
             <item>2017</item>
             <item>2018</item>
             <item>2019</item>
         </string-array>
+    <string-array name="smilefjes_spinner">
+        <item>Filtrer: </item>
+        <item>Smilefjes</item>
+        <item>Nøytral</item>
+        <item>Surfjes</item>
+    </string-array>
+    <string-array name="sortering_spinner">
+        <item>Sorter: </item>
+        <item>Navn</item>
+        <item>Poststed</item>
+    </string-array>
 
 </resources>
