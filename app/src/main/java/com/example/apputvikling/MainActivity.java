@@ -90,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filtrer_aarstall.setAdapter(adapter);
 
-        // Henter verdier fra instillinger via nøkler
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String verdi = myPreferences.getString("aarstall_list", "DEFAULT");
-
         // Setter opp adapter og recycleview
         tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
         oppdaterRecycleview();
@@ -325,4 +321,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /* Henter verdier fra instillinger via nøkler
+            Gjør det i onResume siden når man går tilbake fra
+            instillinger vinduet, vil ikke onCreate kjøres. */
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int verdi = myPreferences.getInt("aarstall_liste_verdi", 0);
+        filtrer_aarstall.setSelection(verdi);
+    }
 }

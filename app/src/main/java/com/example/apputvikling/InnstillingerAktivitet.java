@@ -1,5 +1,6 @@
 package com.example.apputvikling;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -8,6 +9,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 public class InnstillingerAktivitet extends AppCompatActivity {
 
@@ -55,6 +57,11 @@ public class InnstillingerAktivitet extends AppCompatActivity {
             assert aarstall != null;
             aarstall.setOnPreferenceChangeListener((preference, newValue) -> {
                 ListPreference listPref = (ListPreference) preference;
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                int index = listPref.findIndexOfValue((String) newValue);
+                editor.putInt("aarstall_liste_verdi", index);
+                editor.apply();
                 listPref.getValue();
                 return true;
             });
