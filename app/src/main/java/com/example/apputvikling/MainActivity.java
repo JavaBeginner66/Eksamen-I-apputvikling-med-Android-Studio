@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,6 +22,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
                 R.array.aarstall_spinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filtrer_aarstall.setAdapter(adapter);
+
+        // Henter verdier fra instillinger via nøkler
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String verdi = myPreferences.getString("aarstall_list", "DEFAULT");
 
         // Setter opp adapter og recycleview
         tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
@@ -204,6 +211,9 @@ public class MainActivity extends AppCompatActivity {
                 if (direction == ItemTouchHelper.LEFT) {
                     tilsynListe.remove(tilsyn);
                     tilsynAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    /* Kunne brukt koden under i stedet til å legge inn bekrefte eller angre funksjon
+                    (som er beskrevet i oppgava), men syns måten med sletting, også et angre alternativ var bedre */
+                    //tilsynAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
                     final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), "Tilsyn slettet", Snackbar.LENGTH_LONG);
                     snackBar.setActionTextColor(getResources().getColor(R.color.snackbarColor));
                     snackBar.setAction("Gjenopprett tilsyn", v -> {
@@ -218,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
             /*
              * Bibliotek fra github for å sette ikoner og tekst bak elementer i recyclerview som vises på swipe
              * https://github.com/xabaras/RecyclerViewSwipeDecorator
+             * (Ble også tatt i bruk for obligatorisk oppgave 2 for en viss gruppe)
              */
 
             @Override
