@@ -26,6 +26,7 @@ public class TilsynAktivitet extends AppCompatActivity {
 
     public final static String REST_ENDPOINT_KRAVPUNKT = "https://hotell.difi.no/api/json/mattilsynet/smilefjes/kravpunkter?";
     public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT = "kravpunktListe";
+    public final static String TILSYN_JSON_STRING = "jsonString";
 
     private TextView tilsynNavn;
     private TextView tilsynInformasjon;
@@ -33,6 +34,8 @@ public class TilsynAktivitet extends AppCompatActivity {
     private RecyclerView kravpunktRecyclerView;
     private KravpunktListeAdapter kravpunktAdapter;
     private LinkedList<Kravpunkt> kravpunktListe = new LinkedList<>();
+
+    private String tilsynObjektString;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -45,23 +48,33 @@ public class TilsynAktivitet extends AppCompatActivity {
         kravpunktRecyclerView = findViewById(R.id.kravpunkt_recycleView);
 
 
-        if(savedInstanceState != null){
-            kravpunktListe = (LinkedList<Kravpunkt>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT);
-            oppdaterKravpunktListe();
-        }
+
 
         // Henter inn tilsynid og navn som er sendt fra TilsynListeAdapter i OnClick
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if(extras != null) {
+            /* Hvis extra ikke er null, betyr det at verdier har blitt overført, og vi kan legge inn
+            overskrift og tilsyns objekt før vi fortsetter. */
             tilsynNavn.setText(extras.getString("navn"));
-            lesTilsynObjekt(extras.getString("id"));
-            lesKravpunktObjekt(extras.getString("id"));
+            if (savedInstanceState != null) {
+                /* Hvis savedInstanceState ikke er null, betyr det at bruker har rotert skjermen,
+                og alt vi vil gjøre er å hente inn lista og stringen vi allerede har oppretta fra før fra oncreate, og som
+                som vi lagra med onSaveInstanceState før rotering. */
+                kravpunktListe = (LinkedList<Kravpunkt>) savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT);
+                // Henter inn json string som er lagret på rotasjon, så vi slepper å gjøre et Volley kall hver rotasjon.
+                formaterTilsynObjekt(savedInstanceState.getString(TILSYN_JSON_STRING));
+                oppdaterKravpunktListe();
+            } else {
+                // Om ikke skjermen er rotert, betyr det at aktiviteten akkurat har starta, og vi kan hente inn json fra url
+                lesKravpunktObjekt(extras.getString("id"));
+                lesTilsynObjekt(extras.getString("id"));
+            }
         }
-
     }
 
     public void lesTilsynObjekt(String tilsynId)
     {
+        Log.d("halla", "lesTilsynObjekt: ");
         String query = MainActivity.REST_ENDPOINT_TILSYN + "tilsynid=" + tilsynId;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
@@ -89,6 +102,8 @@ public class TilsynAktivitet extends AppCompatActivity {
 
     void formaterTilsynObjekt(String response){
         try {
+            // Lagrer json string her så vi kan igjen lagre den når bruker roterer
+            this.tilsynObjektString = response;
             // (Dette er en forkorta versjon av samme koden som ligger i Tilsyn(lagtilsynliste()).
             // I response får jeg et objekt som ligger i et array, som ligger i et objekt, og som jeg henter ut med denne linja.
             JSONObject  jsonTilsyn = (JSONObject) new JSONArray(new JSONObject(response).getString("entries")).get(0);
@@ -121,19 +136,21 @@ public class TilsynAktivitet extends AppCompatActivity {
     }
 
     private void oppdaterKravpunktListe(){
-        kravpunktAdapter = new KravpunktListeAdapter(this, kravpunktListe);
-        kravpunktRecyclerView.setAdapter(kravpunktAdapter);
+
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
             kravpunktRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         else
             kravpunktRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
+        kravpunktAdapter = new KravpunktListeAdapter(this, kravpunktListe);
+        kravpunktRecyclerView.setAdapter(kravpunktAdapter);
         kravpunktAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString(TILSYN_JSON_STRING, this.tilsynObjektString);
         outState.putSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT, kravpunktListe);
     }
 
