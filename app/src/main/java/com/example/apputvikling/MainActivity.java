@@ -51,7 +51,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public final static String REST_ENDPOINT_TILSYN =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?";
-    public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL =  "recycleView_nokkel";
+    public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL_TILSYN =  "recycleView_nokkel";
 
     public final static int MY_REQUEST_LOCATION = 1;
 
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(savedInstanceState != null){
-            tilsynListe = (LinkedList<Tilsyn>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL);
+            tilsynListe = (LinkedList<Tilsyn>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_TILSYN);
             oppdaterRecycleview();
         }
 
@@ -358,20 +358,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-
-
-        outState.putInt("recycleView_posisjon", tilsynRecyclerView.getVerticalScrollbarPosition());
-
-
-
-        super.onSaveInstanceState(outState, outPersistentState);
-    }
-
-
-    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL, tilsynListe);
+        outState.putSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_TILSYN, tilsynListe);
     }
 }

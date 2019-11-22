@@ -1,10 +1,12 @@
 package com.example.apputvikling;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import java.util.LinkedList;
 public class TilsynAktivitet extends AppCompatActivity {
 
     public final static String REST_ENDPOINT_KRAVPUNKT = "https://hotell.difi.no/api/json/mattilsynet/smilefjes/kravpunkter?";
+    public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT = "kravpunktListe";
 
     private TextView tilsynNavn;
     private TextView tilsynInformasjon;
@@ -31,6 +34,7 @@ public class TilsynAktivitet extends AppCompatActivity {
     private KravpunktListeAdapter kravpunktAdapter;
     private LinkedList<Kravpunkt> kravpunktListe = new LinkedList<>();
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,12 @@ public class TilsynAktivitet extends AppCompatActivity {
             lesTilsynObjekt(extras.getString("id"));
             lesKravpunktObjekt(extras.getString("id"));
         }
+
+        if(savedInstanceState != null){
+            kravpunktListe = (LinkedList<Kravpunkt>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT);
+            oppdaterKravpunktListe();
+        }
+
     }
 
     public void lesTilsynObjekt(String tilsynId)
@@ -115,8 +125,18 @@ public class TilsynAktivitet extends AppCompatActivity {
     private void oppdaterKravpunktListe(){
         kravpunktAdapter = new KravpunktListeAdapter(this, kravpunktListe);
         kravpunktRecyclerView.setAdapter(kravpunktAdapter);
-        kravpunktRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            kravpunktRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        else
+            kravpunktRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
         kravpunktAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT, kravpunktListe);
     }
 
 }
