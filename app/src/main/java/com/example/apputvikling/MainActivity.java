@@ -24,8 +24,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         filtrer_smilefjes = findViewById(R.id.spinner_filter_smilefjes);
         sortering = findViewById(R.id.spinner_sortering);
         tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
-        oppdaterRecycleview();
 
         // Setter opp alle spinners
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -123,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState != null){
             tilsynListe = (LinkedList<Tilsyn>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_TILSYN);
-            oppdaterRecycleview();
+            oppdaterTilsynListe();
+        }else{
+            oppdaterTilsynListe();
         }
 
         swipeFunksjon();
@@ -171,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                             case "Poststed": Collections.sort(tilsynListe, Tilsyn.getPoststedComparator()); break;
                         }
                         // Oppdater recycleview
-                        oppdaterRecycleview();
+                        oppdaterTilsynListe();
                         if(tilsynListe.isEmpty()){
                             Toast.makeText(getApplicationContext(), "Ingen treff", Toast.LENGTH_LONG).show();
                         }
@@ -270,8 +269,7 @@ public class MainActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(tilsynRecyclerView);
     }
 
-    void oppdaterRecycleview(){
-        Log.d("halla", tilsynListe.size() + "");
+    void oppdaterTilsynListe(){
         tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
         tilsynRecyclerView.setAdapter(tilsynAdapter);
         tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(this));

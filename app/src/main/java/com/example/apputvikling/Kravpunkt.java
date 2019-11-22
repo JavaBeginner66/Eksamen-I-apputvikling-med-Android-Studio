@@ -4,9 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Kravpunkt {
+public class Kravpunkt implements Serializable {
 
     static final String OBJEKT_HEADER           = "entries";
     static final String OBJEKT_NAVN             = "kravpunktnavn_no";

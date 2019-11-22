@@ -42,10 +42,13 @@ public class TilsynAktivitet extends AppCompatActivity {
 
         tilsynNavn = findViewById(R.id.tilsyn_informasjon_navn);
         tilsynInformasjon = findViewById(R.id.tilsyn_informasjon_alt);
-
-        // Setter opp adapter og recycleview
         kravpunktRecyclerView = findViewById(R.id.kravpunkt_recycleView);
-        oppdaterKravpunktListe();
+
+
+        if(savedInstanceState != null){
+            kravpunktListe = (LinkedList<Kravpunkt>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT);
+            oppdaterKravpunktListe();
+        }
 
         // Henter inn tilsynid og navn som er sendt fra TilsynListeAdapter i OnClick
         Bundle extras = getIntent().getExtras();
@@ -53,11 +56,6 @@ public class TilsynAktivitet extends AppCompatActivity {
             tilsynNavn.setText(extras.getString("navn"));
             lesTilsynObjekt(extras.getString("id"));
             lesKravpunktObjekt(extras.getString("id"));
-        }
-
-        if(savedInstanceState != null){
-            kravpunktListe = (LinkedList<Kravpunkt>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT);
-            oppdaterKravpunktListe();
         }
 
     }
