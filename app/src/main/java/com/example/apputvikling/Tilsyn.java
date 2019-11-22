@@ -6,10 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-public class Tilsyn {
+public class Tilsyn implements Serializable {
 
     static final String OBJEKT_HEADER        = "entries";
     static final String OBJEKT_ID            = "tilsynid";

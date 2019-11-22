@@ -1,5 +1,6 @@
 package com.example.apputvikling;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +24,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +44,6 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,6 +51,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public final static String REST_ENDPOINT_TILSYN =  "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?";
+    public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL =  "recycleView_nokkel";
 
     public final static int MY_REQUEST_LOCATION = 1;
 
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private Button sook_knapp;
     private Button finn_tilsyn_i_nearheten;
 
-
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         filtrer_aarstall = findViewById(R.id.spinner_filter_aarstall);
         filtrer_smilefjes = findViewById(R.id.spinner_filter_smilefjes);
         sortering = findViewById(R.id.spinner_sortering);
+        tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
+        oppdaterRecycleview();
 
         // Setter opp alle spinners
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -105,9 +110,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortering.setAdapter(adapter3);
 
-        // Setter opp adapter og recycleview
-        tilsynRecyclerView = findViewById(R.id.tilsyn_recycleView);
-        oppdaterRecycleview();
 
         sook_knapp.setOnClickListener((View v) -> {
             hideKeyboard(this);
@@ -119,8 +121,14 @@ public class MainActivity extends AppCompatActivity {
             finnAdresse();
         });
 
+        if(savedInstanceState != null){
+            tilsynListe = (LinkedList<Tilsyn>)savedInstanceState.getSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL);
+            oppdaterRecycleview();
+        }
+
         swipeFunksjon();
     }
+
 
     public void lesTilsynObjekt(String postNr)
     {
@@ -263,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void oppdaterRecycleview(){
+        Log.d("halla", tilsynListe.size() + "");
         tilsynAdapter = new TilsynListeAdapter(this, tilsynListe);
         tilsynRecyclerView.setAdapter(tilsynAdapter);
         tilsynRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -346,5 +355,23 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         int verdi = myPreferences.getInt("aarstall_liste_verdi", 0);
         filtrer_aarstall.setSelection(verdi);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+
+
+        outState.putInt("recycleView_posisjon", tilsynRecyclerView.getVerticalScrollbarPosition());
+
+
+
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL, tilsynListe);
     }
 }
