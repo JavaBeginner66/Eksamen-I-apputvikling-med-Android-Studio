@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             qPostNr = postNr;
 
         query = REST_ENDPOINT_TILSYN + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" +
-                qFilter_aarstall + "&postnr=" + qPostNr + "&total_karakter=" + qF;
+                qFilter_aarstall + "&postnr=" + qPostNr + "&total_karakter=";
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 response -> {
