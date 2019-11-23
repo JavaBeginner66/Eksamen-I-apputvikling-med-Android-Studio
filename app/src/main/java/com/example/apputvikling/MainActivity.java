@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL_TILSYN =  "recycleView_nokkel";
 
     public final static int MY_REQUEST_LOCATION = 1;
+
+    SharedPreferences minePreferanser;
 
     private LocationManager locationManager;
     private String locationProvider = LocationManager.GPS_PROVIDER;
@@ -76,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialiserer mine preferanser objekt
+        minePreferanser = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Toolbar for instillinger
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -139,16 +145,11 @@ public class MainActivity extends AppCompatActivity {
         String query;
 
         // Om filteret ikke ligger på et bestemt element, default søket til ingen filter med en tom string
-        if(qFilter_aarstall.equals("Filtrer:"))
+        if(qFilter_aarstall.equals("Årstall:"))
             qFilter_aarstall = "";
 
-
-        if(qFilter_smilefjes.equals("Filtrer:"))
+        if(qFilter_smilefjes.equals("Karakter:"))
             qFilter_smilefjes = "";
-
-        if(qFilter_smilefjes.equals(getResources().getStringArray(R.array.smilefjes_spinner)[1]))
-            qFilter_smilefjes = "0";
-
 
         /* Om postNr er initialisert, betyr det at kallet kommer fra finnadresse metoden,
          /* og da finner vi tilsyn med post nummer som treffer postnr fra posisjonen vi søker fra.
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             qPostNr = postNr;
 
         query = REST_ENDPOINT_TILSYN + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" +
-                qFilter_aarstall + "&postnr=" + qPostNr + "&total_karakter=";
+                qFilter_aarstall + "&postnr=" + qPostNr + "&total_karakter=" + qFilter_smilefjes;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,
                 response -> {
@@ -180,6 +181,27 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
         Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    /* Lytter etter klikk på checkboksene for navn og poststed
+       onClick kallene er lagt inn i xml fila (activity_main)
+     */
+    public void paaCheckBoxTrykk(View view){
+        boolean avKrysset = ((CheckBox) view).isChecked();
+
+        switch(view.getId()){
+            case R.id.navn_checkbox:
+                if(avKrysset)
+                    sook_navn.setText(minePreferanser.getString("navn_favoritt", ""));
+                else
+                    sook_navn.setText("");
+                break;
+            case R.id.poststed_checkbox:
+                if(avKrysset)
+                    sook_poststed.setText(minePreferanser.getString("poststed_favoritt", ""));
+                else
+                    sook_poststed.setText("");
+        }
     }
 
     /**
@@ -206,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * KILDE: https://stackoverflow.com/questions/1109022/how-to-set-visibility-android-soft-keyboard
@@ -350,8 +373,7 @@ public class MainActivity extends AppCompatActivity {
         /* Henter verdier fra instillinger via nøkler
             Gjør det i onResume siden når man går tilbake fra
             instillinger vinduet, vil ikke onCreate kjøres.*/
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int verdi = myPreferences.getInt("aarstall_liste_verdi", 0);
+        int verdi = minePreferanser.getInt("aarstall_liste_verdi", 0);
         filtrer_aarstall.setSelection(verdi);
     }
 

@@ -5,12 +5,12 @@
         app:title="Favoritter"
         >
         <EditTextPreference
-            app:key="postnr_favoritt"
+            app:key="poststed_favoritt"
             app:title="Favoritt post nummer"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:key="sted_favoritt"
+            app:key="navn_favoritt"
             app:title="Favoritt sted"
             app:useSimpleSummaryProvider="true" />
 

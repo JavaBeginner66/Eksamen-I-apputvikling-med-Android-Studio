@@ -6,17 +6,18 @@
     <string name="kravpunkt_tekst">Tekst: &#160;</string>
 
     <string-array name="aarstall_spinner">
-            <item>Filtrer:</item>
+            <item>Årstall:</item>
             <item>2016</item>
             <item>2017</item>
             <item>2018</item>
             <item>2019</item>
         </string-array>
     <string-array name="smilefjes_spinner">
-        <item>Filtrer: </item>
-        <item>Smilefjes</item>
-        <item>Nøytral</item>
-        <item>Surfjes</item>
+        <item>Karakter: </item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
     <string-array name="sortering_spinner">
         <item>Sorter: </item>
