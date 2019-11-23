@@ -33,7 +33,7 @@ import java.util.LinkedList;
 public class TilsynAktivitet extends AppCompatActivity {
 
     public final static String REST_ENDPOINT_KRAVPUNKT =
-            "https://hotell.difi.no/api/json/mattilsynet/smilefjes/kravpunkter?"; // Ende-punkt for json objekt for kravpunkt med tilhørende tilsyn-id.
+            "https://hotell.difi.no/api/json/mattilsynet/smilefjes/kravpunkter?"; // Endepunkt for json objekt for kravpunkt med tilhørende tilsyn-id.
     public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT = "kravpunktListe"; // Nøkkel-variabel for lagring av kravpunkt-objekt recycleview tabell gjennom rotering av skjerm.
     public final static String TILSYN_JSON_STRING = "jsonString"; // Nøkkel-variabel for lagring av en string med json objekt som har tilsyn informasjon (gjennom rotering)
 
