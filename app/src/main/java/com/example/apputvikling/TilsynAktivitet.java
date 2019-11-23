@@ -1,8 +1,10 @@
 package com.example.apputvikling;
 
+import android.app.Activity;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,19 +77,23 @@ public class TilsynAktivitet extends AppCompatActivity {
     public void lesTilsynObjekt(String tilsynId)
     {
         String query = MainActivity.REST_ENDPOINT_TILSYN + "tilsynid=" + tilsynId;
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, query,
-                this::formaterTilsynObjekt, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
-        Volley.newRequestQueue(this).add(stringRequest);
+        if(isOnline()) {
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.GET, query,
+                    this::formaterTilsynObjekt, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
+            Volley.newRequestQueue(this).add(stringRequest);
+        }
     }
 
     public void lesKravpunktObjekt(String tilsynId)
     {
         String query = REST_ENDPOINT_KRAVPUNKT + "tilsynid=" + tilsynId;
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, query,
-                this::formaterKravpunktObjekt, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
-        Volley.newRequestQueue(this).add(stringRequest);
+        if(isOnline()) {
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.GET, query,
+                    this::formaterKravpunktObjekt, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
+            Volley.newRequestQueue(this).add(stringRequest);
+        }
     }
 
     void formaterKravpunktObjekt(String response){
@@ -151,6 +157,12 @@ public class TilsynAktivitet extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putString(TILSYN_JSON_STRING, this.tilsynObjektString);
         outState.putSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_KRAVPUNKT, kravpunktListe);
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }

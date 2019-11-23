@@ -23,6 +23,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -159,28 +161,36 @@ public class MainActivity extends AppCompatActivity {
 
         query = REST_ENDPOINT_TILSYN + "navn=" + qNavn + "&poststed=" + qPostSted + "&dato=*" +
                 qFilter_aarstall + "&postnr=" + qPostNr + "&total_karakter=" + qFilter_smilefjes;
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, query,
-                response -> {
-                    try {
-                        // Fyller listen med formatert json
-                        tilsynListe = Tilsyn.lagTilsynListe(response);
-                        // Sorterer lista basert på bruker input fra sortering spinner
-                        switch ((String)sortering.getSelectedItem()){
-                            case "Navn": Collections.sort(tilsynListe, Tilsyn.getNameComparator()); break;
-                            case "Poststed": Collections.sort(tilsynListe, Tilsyn.getPoststedComparator()); break;
-                        }
-                        // Oppdater recycleview
-                        oppdaterTilsynListe();
-                        if(tilsynListe.isEmpty()){
-                            Toast.makeText(getApplicationContext(), "Ingen treff", Toast.LENGTH_LONG).show();
-                        }
+        if(isOnline()) {
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.GET, query,
+                    response -> {
+                        try {
+                            // Fyller listen med formatert json
+                            tilsynListe = Tilsyn.lagTilsynListe(response);
+                            // Sorterer lista basert på bruker input fra sortering spinner
+                            switch ((String) sortering.getSelectedItem()) {
+                                case "Navn":
+                                    Collections.sort(tilsynListe, Tilsyn.getNameComparator());
+                                    break;
+                                case "Poststed":
+                                    Collections.sort(tilsynListe, Tilsyn.getPoststedComparator());
+                                    break;
+                            }
+                            // Oppdater recycleview
+                            oppdaterTilsynListe();
+                            if (tilsynListe.isEmpty()) {
+                                Toast.makeText(getApplicationContext(), "Ingen treff", Toast.LENGTH_LONG).show();
+                            }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
-        Volley.newRequestQueue(this).add(stringRequest);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
+            Volley.newRequestQueue(this).add(stringRequest);
+        }else{
+            Toast.makeText(getApplicationContext(), "Enheten har ikke nettverk", Toast.LENGTH_LONG).show();
+        }
     }
 
     /* Lytter etter klikk på checkboksene for navn og poststed
@@ -382,4 +392,11 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable(RECYCLEVIEW_OPPRETTELSE_NOKKEL_TILSYN, tilsynListe);
     }
+
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
 }
