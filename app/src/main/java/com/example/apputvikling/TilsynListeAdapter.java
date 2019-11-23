@@ -15,14 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.LinkedList;
 
 /**
- * Adapter klasse
+ * (Nærmest identisk til KravpunktListeAdapter utenom onclick metoden)
+ * (Klassen er tatt/inspirert fra adapter klassen som ligger ute på canvas.)
+ * Adapter klasse for Tilsyn recyclerview
+ * Viser informasjon for hvert Tilsyn objekt i recycleviewet.
  */
 public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter.TilsynListeHolder>{
 
+    // Deklarerer alle felt;
     private LayoutInflater inflater;
     private Context context;
     private final LinkedList<Tilsyn> tilsynListe;
 
+    // Konstruktør
     public TilsynListeAdapter(Context context, LinkedList<Tilsyn> tilsynListe){
         this.inflater = LayoutInflater.from(context);
         this.context = context;
@@ -30,6 +35,9 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
 
     }
 
+    /**
+     * Metode som inflater hvert Tilsyn objekt med "info_kort" layout
+     */
     @NonNull
     @Override
     public TilsynListeAdapter.TilsynListeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,6 +46,12 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
         return new TilsynListeHolder(itemView, this);
     }
 
+    /**
+     * Metoden henter ut felt-variablene fra dette tilsyn-objektet, og setter alle tekstfeltene til info_kort.xml
+     *
+     * @param holder    Referanse til indre klasse som holder på referanser til "info_kort.xml" views
+     * @param position  Posisjonen til dette Tilsyn-elementet
+     */
     @Override
     public void onBindViewHolder(@NonNull TilsynListeAdapter.TilsynListeHolder holder, int position) {
         holder.kort_info_id.setText(tilsynListe.get(position).getTilsynId());
@@ -53,14 +67,21 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
             case "2": holder.kort_info_karakter.setImageResource(R.drawable.noytral); break;
             case "3": holder.kort_info_karakter.setImageResource(R.drawable.sur); break;
         }
-
     }
 
+    /**
+     *
+     * @return størrelse på tilsynListe
+     */
     @Override
     public int getItemCount() {
         return tilsynListe.size();
     }
 
+    /**
+     * Klassen har ansvar for å deklarere og sette alle TextView i info_kort.xml
+     * med felt som er lagret som Tilsyn objekt.
+     */
     class TilsynListeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView container;
@@ -85,6 +106,11 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Når bruker trykker på et Tilsyn kort, pakker vi id til kortet og overskrift
+         * inn i en bundle, og starter aktiviteten TilsynAktivitet.
+         * Vi sender id så TilsynAktivitet skal kunne finne tilhørende kravpunkt til tilsynet.
+         */
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), TilsynAktivitet.class);
