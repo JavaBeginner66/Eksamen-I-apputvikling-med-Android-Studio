@@ -54,7 +54,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_margin="10dp"
                     android:orientation="horizontal">
 
                     <EditText
@@ -67,6 +67,15 @@
                         android:hint="Navn"
                         android:inputType="text" />
 
+                    <CheckBox
+                        android:id="@+id/navn_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="paaCheckBoxTrykk"
+                        android:buttonTint="@color/textWhitePrimary"
+                        />
+
                     <EditText
                         android:id="@+id/sokefelt_adresse"
                         android:layout_width="100dp"
@@ -76,6 +85,14 @@
                         android:ems="10"
                         android:hint="Poststed"
                         android:inputType="text" />
+                    <CheckBox
+                        android:id="@+id/poststed_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="paaCheckBoxTrykk"
+                        android:buttonTint="@color/textWhitePrimary"
+                        />
                 </LinearLayout>
 
                 <LinearLayout

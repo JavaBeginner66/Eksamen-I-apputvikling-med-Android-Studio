@@ -74,7 +74,6 @@ public class TilsynAktivitet extends AppCompatActivity {
 
     public void lesTilsynObjekt(String tilsynId)
     {
-        Log.d("halla", "lesTilsynObjekt: ");
         String query = MainActivity.REST_ENDPOINT_TILSYN + "tilsynid=" + tilsynId;
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, query,

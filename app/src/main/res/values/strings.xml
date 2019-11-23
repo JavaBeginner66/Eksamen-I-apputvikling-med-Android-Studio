@@ -13,16 +13,16 @@
             <item>2019</item>
         </string-array>
     <string-array name="smilefjes_spinner">
-        <item>Karakter: </item>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
+            <item>Karakter: </item>
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array>
     <string-array name="sortering_spinner">
-        <item>Sorter: </item>
-        <item>Navn</item>
-        <item>Poststed</item>
-    </string-array>
+            <item>Sorter: </item>
+            <item>Navn</item>
+            <item>Poststed</item>
+        </string-array>
 
 </resources>
