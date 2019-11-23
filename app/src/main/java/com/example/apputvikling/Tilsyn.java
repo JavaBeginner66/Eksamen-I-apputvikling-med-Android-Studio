@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 /**
+ * (Klassen er nærmest identisk til Kravpunkt utenom comparable metodene, og jeg har valgt å bare kopiere-lime inn dokumentasjon)
  * Klassen har ansvar for å representere hvert Tilsyn objekt som blir hentet ut fra datasettet.
  * Den sørger også for å gjøre om Json objekt til lister av dette objektet.
  *
