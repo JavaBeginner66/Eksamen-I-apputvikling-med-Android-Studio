@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Verdier for info_kort.xml -->
-    <dimen name="vertical_card_margin_vertical">6dp</dimen>
-    <dimen name="vertical_card_margin_horizontal">6dp</dimen>
-    <dimen name="horizontal_card_margin_vertical">3dp</dimen>
-    <dimen name="horizontal_card_margin_horizontal">5dp</dimen>
-    <dimen name="card_radius">8dp</dimen>
-    <dimen name="kort_hoyde">250dp</dimen>
-    <dimen name="kort_info_marginBottom">3dp</dimen>
-    <dimen name="kort_info_marginTop">3dp</dimen>
-    <dimen name="bilde_dimens">100dp</dimen>
     <!-- Verdier for activity_main.xml -->
     <dimen name="overskrift_size">30sp</dimen>
     <dimen name="overskrift_margin">10dp</dimen>
@@ -37,6 +27,15 @@
     <dimen name="tilsyn_overskrift_size_land">25sp</dimen>
     <dimen name="scrollview_tekst_size_land">20sp</dimen>
     <!-- Verdier for info_kort.xml -->
+    <dimen name="vertical_card_margin_vertical">6dp</dimen>
+    <dimen name="vertical_card_margin_horizontal">6dp</dimen>
+    <dimen name="horizontal_card_margin_vertical">3dp</dimen>
+    <dimen name="horizontal_card_margin_horizontal">5dp</dimen>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="kort_hoyde">250dp</dimen>
+    <dimen name="kort_info_marginBottom">3dp</dimen>
+    <dimen name="kort_info_marginTop">3dp</dimen>
+    <dimen name="bilde_dimens">100dp</dimen>
     <dimen name="bilde_marginright">10dp</dimen>
     <dimen name="info_kort_hoved_layout_bredde">250dp</dimen>
     <dimen name="info_kort_margin">20dp</dimen>
