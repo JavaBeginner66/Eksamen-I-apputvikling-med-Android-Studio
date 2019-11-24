@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String REST_ENDPOINT_TILSYN =
             "https://hotell.difi.no/api/json/mattilsynet/smilefjes/tilsyn?";// Endepunkt for json objekt for Tilsyn fra datasettet
     public final static String RECYCLEVIEW_OPPRETTELSE_NOKKEL_TILSYN =  "recycleView_nokkel";// Nøkkel-variabel for lagring av tilsyn tabell gjennom rotering av skjerm.
+    public final static String TILSYN_TIL_KRAVPUNKT_ID =  "id_tilsyn"; // Nøkkel-variabel for å overføre id på tilsyn objekt fra onclick i TilsynListeAdapter til TilsynAktivitet
+    public final static String TILSYN_TIL_KRAVPUNKT_NAVN =  "navn_tilsyn";// Nøkkel-variabel for å overføre navn på tilsyn objekt fra onclick i TilsynListeAdapter til TilsynAktivitet
 
     public final static int MY_REQUEST_LOCATION = 1; // Konstant Sjekk-variabel for gps funksjoner
 
@@ -171,10 +173,10 @@ public class MainActivity extends AppCompatActivity {
         String query;
 
         // Om filteret ikke ligger på et bestemt element, default søket til ingen filter med en tom string
-        if(qFilter_aarstall.equals("Årstall:"))
+        if(qFilter_aarstall.equals(getString(R.string.aarstal_filter_sammenligning)))
             qFilter_aarstall = "";
 
-        if(qFilter_smilefjes.equals("Karakter:"))
+        if(qFilter_smilefjes.equals(getString(R.string.karakter_filter_sammenligning)))
             qFilter_smilefjes = "";
 
         /* Om postNr er initialisert, betyr det at kallet kommer fra finnadresse metoden,
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                             oppdaterTilsynListe();
                             // Hvis listen er tom etter søk, betyr det at brukeren skrev noe inn i søkefeltene som ikke matcha med noe.
                             if (tilsynListe.isEmpty()) {
-                                Toast.makeText(getApplicationContext(), "Ingen treff", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), R.string.tilsyn_liste_tom_message, Toast.LENGTH_LONG).show();
                             }
 
                         } catch (JSONException e) {
@@ -215,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     }, error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show());
             Volley.newRequestQueue(this).add(stringRequest);
         }else{
-            Toast.makeText(getApplicationContext(), "Enheten har ikke nettverk", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.ingen_nettverk_message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -233,13 +235,13 @@ public class MainActivity extends AppCompatActivity {
         switch(view.getId()){
             case R.id.navn_checkbox:
                 if(avKrysset)
-                    sook_navn.setText(minePreferanser.getString("navn_favoritt", ""));
+                    sook_navn.setText(minePreferanser.getString(getString(R.string.navn_favoritt_instillinger), ""));
                 else
                     sook_navn.setText("");
                 break;
             case R.id.poststed_checkbox:
                 if(avKrysset)
-                    sook_poststed.setText(minePreferanser.getString("poststed_favoritt", ""));
+                    sook_poststed.setText(minePreferanser.getString(getString(R.string.poststed_favoritt_instillinger), ""));
                 else
                     sook_poststed.setText("");
         }
@@ -320,9 +322,9 @@ public class MainActivity extends AppCompatActivity {
                             tilsynListe.remove(tilsyn);
                             tilsynAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                             // Her setter jeg opp en snackbar med et valg i å gjenopprette tilsyn-objektet i tilfelle bruker ombestemmer seg.
-                            final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), "Tilsyn slettet", Snackbar.LENGTH_LONG);
+                            final Snackbar snackBar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.tilsyn_slettet_message), Snackbar.LENGTH_LONG);
                             snackBar.setActionTextColor(getResources().getColor(R.color.snackbarColor));
-                            snackBar.setAction("Gjenopprett tilsyn", v -> {
+                            snackBar.setAction(getString(R.string.gjenopprett_tilsyn_message), v -> {
                                 tilsynListe.add(posisjon, tilsyn);
                                 tilsynAdapter.notifyItemInserted(posisjon);
                                 snackBar.dismiss();
@@ -331,8 +333,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     };
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Vil du slette tilsyn fra listen?").setPositiveButton("Bekreft", dialogClickListener)
-                            .setNegativeButton("Nei", dialogClickListener).show();
+                    builder.setMessage(getString(R.string.vil_du_slette_tilsyn_message)).setPositiveButton(getString(R.string.tilsyn_fjern_bekreft), dialogClickListener)
+                            .setNegativeButton(getString(R.string.tilsyn_angre_slett), dialogClickListener).show();
                 }
             }
         };
@@ -429,7 +431,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // Henter årstall-preferanse fra instillinger. Om bruker ikke har satt noe der, vil en tom streng komme.
-        int verdi = minePreferanser.getInt("aarstall_liste_verdi", 0);
+        int verdi = minePreferanser.getInt(getString(R.string.aarstall_liste_verdi), 0);
         filtrer_aarstall.setSelection(verdi);
     }
 

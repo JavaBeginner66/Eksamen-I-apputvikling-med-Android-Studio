@@ -1,10 +1,77 @@
 <resources>
+    <!-- App navn -->
     <string name="app_name">Mattilsynet</string>
+    <!-- Strings for kravpunkt-informasjons kortet -->
     <string name="kravpunkt_navn">Navn: &#160;</string>
     <string name="kravpunkt_dato">Dato: &#160;</string>
     <string name="kravpunkt_ordningsverdi">Ordningsverdi: &#160;</string>
     <string name="kravpunkt_tekst">Tekst: &#160;</string>
+    <!-- Diverse tekstboks strenger-->
+    <string name="tilsyn_liste_tom_message">Ingen treff</string>
+    <string name="ingen_nettverk_message">Enheten har ikke nettverk</string>
+    <string name="tilsyn_slettet_message">Tilsyn slettet</string>
+    <string name="gjenopprett_tilsyn_message">Gjenopprett tilsyn</string>
+    <string name="vil_du_slette_tilsyn_message">Vil du slette tilsyn fra listen?</string>
+    <string name="tilsyn_fjern_bekreft">Bekreft</string>
+    <string name="tilsyn_angre_slett">Nei</string>
+    <!-- Query if-sammenligninger -->
+    <string name="aarstal_filter_sammenligning">Årstall:</string>
+    <string name="karakter_filter_sammenligning">Karakter:</string>
+    <!-- Favoritter id'er i instillinger -->
+    <string name="navn_favoritt_instillinger">navn_favoritt</string>
+    <string name="poststed_favoritt_instillinger">poststed_favoritt</string>
+    <string name="aarstall_spinner_liste">aarstall_liste</string>
+    <!-- Årstall liste int verdi gjennom ved konfigurasjons-lagring -->
+    <string name="aarstall_liste_verdi">aarstall_liste_verdi</string>
+    <!-- Navn på alle relevante tilsyn datasett verdier -->
+    <string name="tilsyn_objekt_dato">dato</string>
+    <string name="tilsyn_objekt_poststed">poststed</string>
+    <string name="tilsyn_objekt_orgnummer">orgnummer</string>
+    <string name="tilsyn_objekt_postnr">postnr</string>
+    <string name="tilsyn_objekt_tema1">tema1_no</string>
+    <string name="tilsyn_objekt_karakter1">karakter1</string>
+    <string name="tilsyn_objekt_tema2">tema2_no</string>
+    <string name="tilsyn_objekt_karakter2">karakter2</string>
+    <string name="tilsyn_objekt_tema3">tema3_no</string>
+    <string name="tilsyn_objekt_karakter3">karakter3</string>
+    <string name="tilsyn_objekt_tema4">tema4_no</string>
+    <string name="tilsyn_objekt_karakter4">karakter4</string>
+    <string name="tilsyn_objekt_totalkarakter">total_karakter</string>
+    <string name="tilsyn_objekt_adrlinje1">adrlinje1</string>
+    <string name="tilsyn_objekt_status">status</string>
+    <string name="tilsyn_objekt_tilsynsbesoektype">tilsynsbesoektype</string>
+    <!-- Label/fortekst på alle tilsyn datasett verdier -->
+    <string name="tilsyn_label_poststed">Poststed:</string>
+    <string name="tilsyn_label_orgnr">Org nummer:</string>
+    <string name="tilsyn_label_postnummer">Post nummer:</string>
+    <string name="tilsyn_label_dato">Dato:</string>
+    <string name="tilsyn_label_tema1">Tema 1:</string>
+    <string name="tilsyn_label_karakter1">Karakter 1:</string>
+    <string name="tilsyn_label_tema2">Tema 2:</string>
+    <string name="tilsyn_label_karakter2">Karakter 2:</string>
+    <string name="tilsyn_label_tema3">Tema 3:</string>
+    <string name="tilsyn_label_karakter3">Karakter 3:</string>
+    <string name="tilsyn_label_tema4">Tema 4:</string>
+    <string name="tilsyn_label_karakter4">Karakter 4:</string>
+    <string name="tilsyn_label_totalkarakter">Total karakter:</string>
+    <string name="tilsyn_label_adrlinje1">Adresse linje 1:</string>
+    <string name="tilsyn_label_status">Status:</string>
+    <string name="tilsyn_label_tilsynsbesoekstype">Tilsyns besøks-type:</string>
+    <!-- Generel tekst og overskrifter i instillinger.xml -->
+    <string name="instillinger_favoritter_label">Favoritter</string>
+    <string name="instillinger_favoritt_postnr_label">Favoritt post nummer</string>
+    <string name="instillinger_favorittsted_label">Favoritt sted</string>
+    <string name="instillinger_lagret_instillinger_label">Lagret instillinger</string>
+    <string name="instillinger_aarstall_filter_label">Sett filter årstall</string>
+    <!-- activity_main.xml tekst -->
+    <string name="mainactivity_overskrift">Søk etter tilsyn</string>
+    <string name="sokefelt_navn_hint">Navn</string>
+    <string name="sokefelt_poststed_hint">Poststed</string>
+    <string name="sook_label">Søk</string>
+    <string name="sook_tilsyn_omraadet_tekst">Finn tilsyn i området</string>
 
+
+    <!-- Arrays for spinners -->
     <string-array name="aarstall_spinner">
             <item>Årstall:</item>
             <item>2016</item>

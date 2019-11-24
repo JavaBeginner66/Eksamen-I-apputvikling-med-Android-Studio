@@ -26,11 +26,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Søk etter tilsyn"
+        android:text="@string/mainactivity_overskrift"
         android:textColor="@color/textWhitePrimary"
-        android:textSize="30dp"
+        android:textSize="@dimen/overskrift_size"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/overskrift_margin"
         />
 
 
@@ -38,42 +38,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/sokefelt_linear_margin"
        >
 
         <EditText
             android:id="@+id/sokefelt_navn"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/sokefelt_bredde"
             android:layout_height="wrap_content"
-            android:autofillHints="Navn"
-            android:ems="10"
             android:inputType="text"
-            android:hint="Navn"
-            android:layout_margin="10dp"
-            />
+            android:hint="@string/sokefelt_navn_hint"
+            android:layout_margin="@dimen/sokefelt_margin"
+            android:autofillHints="Navn" />
         <CheckBox
             android:id="@+id/navn_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/checkbox_margintop"
             android:onClick="paaCheckBoxTrykk"
             android:buttonTint="@color/textWhitePrimary"
             />
         <EditText
             android:id="@+id/sokefelt_adresse"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/sokefelt_bredde"
             android:layout_height="wrap_content"
-            android:autofillHints="Navn"
-            android:ems="10"
             android:inputType="text"
-            android:hint="Poststed"
-            android:layout_margin="10dp"
-            />
+            android:hint="@string/sokefelt_poststed_hint"
+            android:layout_margin="@dimen/sokefelt_margin"
+            android:autofillHints="Poststed" />
         <CheckBox
             android:id="@+id/poststed_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/checkbox_margintop"
             android:onClick="paaCheckBoxTrykk"
             android:buttonTint="@color/textWhitePrimary"
             />
@@ -83,9 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        >
+        android:layout_marginBottom="@dimen/spinner_layout_marginbottom">
         <Spinner
             android:id="@+id/spinner_filter_aarstall"
             android:layout_width="wrap_content"
@@ -106,27 +100,27 @@
     </LinearLayout>
     <Button
         android:id="@+id/sok_knapp"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/sook_knapp_bredde"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Søk"
+        android:text="@string/sook_label"
         android:textColor="@color/textWhiteSecondary"
-        android:textSize="15dp"
+        android:textSize="@dimen/sook_knapp_textsize"
 
         />
     <Button
         android:id="@+id/finn_tilsyn_i_nearheten"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/sook_knapp_bredde"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Finn tilsyn i området"
+        android:text="@string/sook_tilsyn_omraadet_tekst"
         android:textColor="@color/textWhiteSecondary"
-        android:textSize="15dp"
+        android:textSize="@dimen/sook_knapp_textsize"
 
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tilsyn_recycleView"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/recycleview_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

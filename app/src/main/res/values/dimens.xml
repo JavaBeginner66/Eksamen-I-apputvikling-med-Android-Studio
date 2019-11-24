@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Verdier for info_kort.xml -->
     <dimen name="vertical_card_margin_vertical">6dp</dimen>
     <dimen name="vertical_card_margin_horizontal">6dp</dimen>
     <dimen name="horizontal_card_margin_vertical">3dp</dimen>
@@ -9,4 +10,15 @@
     <dimen name="kort_info_marginBottom">3dp</dimen>
     <dimen name="kort_info_marginTop">3dp</dimen>
     <dimen name="bilde_dimens">100dp</dimen>
+    <!-- Verdier for activity_main.xml -->
+    <dimen name="overskrift_size">30sp</dimen>
+    <dimen name="overskrift_margin">10dp</dimen>
+    <dimen name="sokefelt_linear_margin">20dp</dimen>
+    <dimen name="sokefelt_bredde">100dp</dimen>
+    <dimen name="sokefelt_margin">10dp</dimen>
+    <dimen name="checkbox_margintop">10dp</dimen>
+    <dimen name="spinner_layout_marginbottom">10dp</dimen>
+    <dimen name="sook_knapp_bredde">250dp</dimen>
+    <dimen name="sook_knapp_textsize">15sp</dimen>
+    <dimen name="recycleview_margin">5dp</dimen>
 </resources>

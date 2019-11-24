@@ -63,7 +63,7 @@ public class TilsynAktivitet extends AppCompatActivity {
         if(extras != null) {
             /* Hvis extra ikke er null, betyr det at verdier har blitt overført, og vi kan legge inn
             overskrift før vi fortsetter. */
-            tilsynNavn.setText(extras.getString("navn"));
+            tilsynNavn.setText(extras.getString(MainActivity.TILSYN_TIL_KRAVPUNKT_NAVN));
             if (savedInstanceState != null) {
                 /* Hvis savedInstanceState ikke er null, betyr det at bruker har rotert skjermen,
                 og alt vi vil gjøre er å hente inn lista og strengen vi allerede har oppretta fra før i oncreate, og som
@@ -76,8 +76,8 @@ public class TilsynAktivitet extends AppCompatActivity {
             } else {
                 // Om ikke skjermen er rotert, betyr det at aktiviteten akkurat har starta, og vi kan hente inn ny json fra url
                 // nøkkel "id" er feltet ''tilsynid'' i datasettet tilsyn, overført fra TilsynListeAdapter
-                lesKravpunktObjekt(extras.getString("id"));
-                lesTilsynObjekt(extras.getString("id"));
+                lesKravpunktObjekt(extras.getString(MainActivity.TILSYN_TIL_KRAVPUNKT_ID));
+                lesTilsynObjekt(extras.getString(MainActivity.TILSYN_TIL_KRAVPUNKT_ID));
             }
         }
     }
@@ -150,28 +150,28 @@ public class TilsynAktivitet extends AppCompatActivity {
             // Lagrer json string her så vi kan igjen lagre den når bruker roterer
             this.tilsynObjektString = response;
             // I response får jeg et objekt som ligger i et array, som ligger i et objekt. Denne linja filtrerer det ned objektet vi trenger.
-            JSONObject  jsonTilsyn = (JSONObject) new JSONArray(new JSONObject(response).getString("entries")).get(0);
+            JSONObject  jsonTilsyn = (JSONObject) new JSONArray(new JSONObject(response).getString(Tilsyn.OBJEKT_HEADER)).get(0);
             // Datoen ligger i objektet som 8 rene siffer, så vi må formatere inn '/' for å vise tydlig hvilken dato det er.
-            String dato = jsonTilsyn.getString("dato");
+            String dato = jsonTilsyn.getString(getString(R.string.tilsyn_objekt_dato));
             String datoFormatert = dato.substring(0,2) + "/" + dato.substring(2,4) + "/" + dato.substring(4,8);
             // Legger opp all relevant informasjon fra tilsyn objektet inn i et textview i et scrollview
             String info =
-                    "Poststed: " + jsonTilsyn.getString("poststed") + "\n \n" +
-                    "Org nummer: " + jsonTilsyn.getString("orgnummer") + "\n \n" +
-                    "Post nummer: " + jsonTilsyn.getString("postnr") + "\n \n" +
-                    "Dato: " + datoFormatert + "\n \n" +
-                    "Tema 1: " + jsonTilsyn.getString("tema1_no") + "\n \n" +
-                    "Karakter 1: " + jsonTilsyn.getString("karakter1") + "\n \n" +
-                    "Tema 2: " + jsonTilsyn.getString("tema2_no") + "\n \n" +
-                    "Karakter 2: " + jsonTilsyn.getString("karakter2") + "\n \n" +
-                    "Tema 3: " + jsonTilsyn.getString("tema3_no") + "\n \n" +
-                    "Karakter 3: " + jsonTilsyn.getString("karakter3") + "\n \n" +
-                    "Tema 4: " + jsonTilsyn.getString("tema4_no") + "\n \n" +
-                    "Karakter 4: " + jsonTilsyn.getString("karakter4") + "\n \n" +
-                    "Total karakter: " + jsonTilsyn.getString("total_karakter") + "\n \n" +
-                    "Adresse linje 1: " + jsonTilsyn.getString("adrlinje1") + "\n \n" +
-                    "Status: " + jsonTilsyn.getString("status") + "\n \n" +
-                    "Tilsyns besøks-type: " + jsonTilsyn.getString("tilsynsbesoektype");
+                    getString(R.string.tilsyn_label_poststed) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_poststed)) + "\n \n" +
+                    getString(R.string.tilsyn_label_orgnr) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_orgnummer)) + "\n \n" +
+                    getString(R.string.tilsyn_label_postnummer) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_postnr)) + "\n \n" +
+                    getString(R.string.tilsyn_label_dato) + datoFormatert + "\n \n" +
+                    getString(R.string.tilsyn_label_tema1) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_tema1)) + "\n \n" +
+                    getString(R.string.tilsyn_label_karakter1) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_karakter1)) + "\n \n" +
+                    getString(R.string.tilsyn_label_tema2) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_tema2)) + "\n \n" +
+                    getString(R.string.tilsyn_label_karakter2) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_karakter2)) + "\n \n" +
+                    getString(R.string.tilsyn_label_tema3) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_tema3)) + "\n \n" +
+                    getString(R.string.tilsyn_label_karakter3) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_karakter3)) + "\n \n" +
+                    getString(R.string.tilsyn_label_tema4) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_tema4)) + "\n \n" +
+                    getString(R.string.tilsyn_label_karakter4) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_karakter4)) + "\n \n" +
+                    getString(R.string.tilsyn_label_totalkarakter) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_totalkarakter)) + "\n \n" +
+                    getString(R.string.tilsyn_label_adrlinje1) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_adrlinje1)) + "\n \n" +
+                    getString(R.string.tilsyn_label_status) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_status)) + "\n \n" +
+                    getString(R.string.tilsyn_label_tilsynsbesoekstype) + jsonTilsyn.getString(getString(R.string.tilsyn_objekt_tilsynsbesoektype));
 
             tilsynInformasjon.setText(info);
         } catch (JSONException e) {

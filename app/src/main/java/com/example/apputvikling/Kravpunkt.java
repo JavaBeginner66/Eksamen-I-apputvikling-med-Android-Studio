@@ -62,6 +62,7 @@ public class Kravpunkt implements Serializable {
         // Gjøre json objektet om til et json array (som er et array av json objekt).
         JSONArray jsonKravpunktTabell = jsonData.optJSONArray(OBJEKT_HEADER);
         // Gå gjennom alle objekt med en for loop.
+        assert jsonKravpunktTabell != null;
         for(int i = 0; i < jsonKravpunktTabell.length(); i++) {
             // Få tak i objektet som ligger i posisjon(i), og typetvinger det til et json objekt.
             // Dette går greit så lenge vi vet at datasettet har satt det opp i objekt->array->objekt

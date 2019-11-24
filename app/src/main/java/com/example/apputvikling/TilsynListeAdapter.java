@@ -115,8 +115,8 @@ public class TilsynListeAdapter  extends RecyclerView.Adapter<TilsynListeAdapter
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), TilsynAktivitet.class);
             // Sender tilsynid til neste aktivitet så jeg kan finne igjen objektet og vise informasjon
-            intent.putExtra("id", kort_info_id.getText().toString());
-            intent.putExtra("navn", kort_info_navn.getText().toString());
+            intent.putExtra(MainActivity.TILSYN_TIL_KRAVPUNKT_ID, kort_info_id.getText().toString());
+            intent.putExtra(MainActivity.TILSYN_TIL_KRAVPUNKT_NAVN, kort_info_navn.getText().toString());
             view.getContext().startActivity(intent);
         }
 

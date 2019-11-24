@@ -61,7 +61,7 @@ public class InnstillingerAktivitet extends AppCompatActivity {
              *  ** KILDE **
              *  https://stackoverflow.com/questions/6669482/value-of-a-listpreference-never-updates
              */
-            ListPreference aarstall = findPreference("aarstall_list");
+            ListPreference aarstall = findPreference(getString(R.string.aarstall_spinner_liste));
             assert aarstall != null;
             // Sier hva som skal skje om årstall lista blir satt til en ny verdi
             aarstall.setOnPreferenceChangeListener((preference, newValue) -> {
@@ -72,7 +72,7 @@ public class InnstillingerAktivitet extends AppCompatActivity {
                 // Finner posisjon verdien til den nye liste-verdien
                 int verdi = listPref.findIndexOfValue((String) newValue);
                 // Putter verdien inn i preferences
-                editor.putInt("aarstall_liste_verdi", verdi);
+                editor.putInt(getString(R.string.aarstall_liste_verdi), verdi);
                 editor.apply();
                 listPref.getValue();
                 return true;
