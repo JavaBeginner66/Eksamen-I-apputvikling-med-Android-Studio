@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
+    android:layout_margin="@dimen/hoved_layout_tilsyn_margin"
     android:id="@+id/hoved_constraint_tilsynActivity">
 
     <LinearLayout
         android:id="@+id/constraint_venstre_tilsyn"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/tilsyn_informasjonsvindu_bredde_land"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/tilsyn_informasjonsvindu_margin_land"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,20 +21,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="tilsyn_informasjon_navn"
+            android:text=""
             android:textColor="@color/textWhitePrimary"
-            android:textSize="30dp" />
+            android:textSize="@dimen/tilsyn_overskrift_size_land" />
 
             <ScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/tilsyn_scrollview_margin_land"
                 android:background="@color/colorCardBackground">
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:padding="12dp">
+                    android:padding="@dimen/scrollview_padding_land">
 
                     <TextView
                         android:id="@+id/tilsyn_informasjon_alt"
@@ -42,7 +42,7 @@
                         android:layout_height="match_parent"
                         android:text=""
                         android:textColor="@color/textWhitePrimary"
-                        android:textSize="25dp" />
+                        android:textSize="@dimen/scrollview_tekst_size_land" />
 
                 </RelativeLayout>
 
@@ -65,15 +65,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="↓ Kravpunkt ↑"
+            android:text="@string/kravpunkt_objektliste_overskrift_land"
             android:textColor="@color/textWhitePrimary"
-            android:textSize="30dp" />
+            android:textSize="@dimen/kravpunkt_objektliste_overskrift_tekstsize" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/kravpunkt_recycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/kravpunkt_recycleview_margin"
             android:orientation="horizontal" />
     </LinearLayout>
 

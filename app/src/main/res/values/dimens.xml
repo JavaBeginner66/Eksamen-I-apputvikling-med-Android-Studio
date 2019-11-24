@@ -21,4 +21,26 @@
     <dimen name="sook_knapp_bredde">250dp</dimen>
     <dimen name="sook_knapp_textsize">15sp</dimen>
     <dimen name="recycleview_margin">5dp</dimen>
+    <!-- Verdier for activity_tilsyn.xml -->
+    <dimen name="hoved_layout_tilsyn_margin">10dp</dimen>
+    <dimen name="tilsyn_overskrift_size">30sp</dimen>
+    <dimen name="tilsyn_infovindu_hoyde">350dp</dimen>
+    <dimen name="tilsyn_informasjon_scrollview_margin">10dp</dimen>
+    <dimen name="scrollview_padding">12dp</dimen>
+    <dimen name="scrollview_tekst_size">25sp</dimen>
+    <dimen name="kravpunkt_objektliste_overskrift_tekstsize">30sp</dimen>
+    <dimen name="kravpunkt_recycleview_margin">5dp</dimen>
+    <dimen name="tilsyn_informasjonsvindu_bredde_land">300dp</dimen>
+    <dimen name="tilsyn_informasjonsvindu_margin_land">10dp</dimen>
+    <dimen name="tilsyn_scrollview_margin_land">10dp</dimen>
+    <dimen name="scrollview_padding_land">12dp</dimen>
+    <dimen name="tilsyn_overskrift_size_land">25sp</dimen>
+    <dimen name="scrollview_tekst_size_land">20sp</dimen>
+    <!-- Verdier for info_kort.xml -->
+    <dimen name="bilde_marginright">10dp</dimen>
+    <dimen name="info_kort_hoved_layout_bredde">250dp</dimen>
+    <dimen name="info_kort_margin">20dp</dimen>
+    <dimen name="info_kort_tekst_size">20sp</dimen>
+
+
 </resources>

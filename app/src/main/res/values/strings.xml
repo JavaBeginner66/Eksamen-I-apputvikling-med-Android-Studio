@@ -69,6 +69,12 @@
     <string name="sokefelt_poststed_hint">Poststed</string>
     <string name="sook_label">Søk</string>
     <string name="sook_tilsyn_omraadet_tekst">Finn tilsyn i området</string>
+    <!-- activity_tilsyn.xml tekst -->
+    <string name="kravpunkt_objektliste_overskrift">← Kravpunkt →</string>
+    <string name="kravpunkt_objektliste_overskrift_land">↓ Kravpunkt ↑</string>
+    <!-- Annet -->
+    <string name="instillinger_menuitem_label">Instillinger</string>
+    <string name="bilde_content_description">Beskriver karakter</string>
 
 
     <!-- Arrays for spinners -->

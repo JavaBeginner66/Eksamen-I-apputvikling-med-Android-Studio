@@ -1,4 +1,4 @@
-<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView
     android:id="@+id/kort"
     android:layout_width="match_parent"
     android:layout_height="@dimen/kort_hoyde"
@@ -29,13 +29,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="10dp"
-            />
+            android:layout_marginRight="@dimen/bilde_marginright"
+            android:contentDescription="@string/bilde_content_description"
+            android:layout_marginEnd="@dimen/bilde_marginright" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="250dp"
+            android:layout_width="@dimen/info_kort_hoved_layout_bredde"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/info_kort_margin"
 
             app:layout_constraintEnd_toStartOf="@+id/kort_bilde"
             app:layout_constraintStart_toStartOf="parent">
@@ -53,7 +54,7 @@
                     android:layout_marginBottom="@dimen/kort_info_marginBottom"
                     android:text=""
                     android:textColor="@color/textWhitePrimary"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/info_kort_tekst_size" />
 
                 <TextView
                     android:id="@+id/kort_text_2"
@@ -63,7 +64,7 @@
                     android:layout_marginBottom="@dimen/kort_info_marginBottom"
                     android:text=""
                     android:textColor="@color/textWhitePrimary"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/info_kort_tekst_size" />
 
                 <TextView
                     android:id="@+id/kort_text_3"
@@ -73,7 +74,7 @@
                     android:layout_marginBottom="@dimen/kort_info_marginBottom"
                     android:text=""
                     android:textColor="@color/textWhitePrimary"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/info_kort_tekst_size" />
 
                 <TextView
                     android:id="@+id/kort_text_4"
@@ -83,7 +84,7 @@
                     android:layout_marginBottom="@dimen/kort_info_marginBottom"
                     android:text=""
                     android:textColor="@color/textWhitePrimary"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/info_kort_tekst_size" />
 
                 <TextView
                     android:id="@+id/kort_text_5"
@@ -93,16 +94,16 @@
                     android:layout_marginBottom="@dimen/kort_info_marginBottom"
                     android:text=""
                     android:textColor="@color/textWhitePrimary"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/info_kort_tekst_size" />
 
+                <!-- Brukes bare til å lagre id -->
                 <TextView
                     android:id="@+id/kort_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     />
-
-
+                
             </LinearLayout>
 
 
